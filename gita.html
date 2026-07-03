@@ -4,135 +4,202 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bhagavad Gita — The 1 Path</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Noto+Serif+Devanagari:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --midnight: #080810; --deep-blue: #0D1525; --sacred-gold: #C9A227;
-            --warm-gold: #D4AF37; --soft-gold: #F5E6C8; --divine-rose: #8B2635;
-            --moonlight: #E8E4D9; --smoke: rgba(255,255,255,0.5); --border: rgba(201,162,39,0.12);
+            --midnight: #06060F; --deep: #0A0A1A; --gold: #C9A227;
+            --gold-light: #E8C84A; --soft-gold: #F5E6C8;
+            --rose: #8B2635; --moon: #E8E4D9; --smoke: rgba(255,255,255,0.5);
+            --glass: rgba(255,255,255,0.03); --glass-border: rgba(201,162,39,0.12);
+            --glass-hover: rgba(201,162,39,0.06); --glass-strong: rgba(10,10,26,0.88);
         }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
-            font-family: 'Cormorant Garamond', serif; background: var(--midnight);
-            color: var(--moonlight); line-height: 1.8; overflow-x: hidden;
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--midnight);
+            color: var(--moon);
+            overflow-x: hidden;
         }
-        .ambient-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 0;
-            background: radial-gradient(ellipse at 20% 10%, rgba(201,162,39,0.04) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 90%, rgba(139,38,53,0.03) 0%, transparent 50%);
+        body.light {
+            --midnight: #F5F0E8; --deep: #EDE7D8; --glass: rgba(0,0,0,0.02);
+            --glass-border: rgba(201,162,39,0.15); --glass-hover: rgba(201,162,39,0.04);
+            --glass-strong: rgba(245,240,232,0.92); --moon: #2A2520; --smoke: rgba(42,37,32,0.6);
         }
+        body.light { background: var(--midnight); }
+
+        /* PARTICLES */
+        #particles-canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:0.3; }
+
+        /* NAV */
         nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 22px 80px; transition: all 0.5s ease;
+            padding: 18px 80px;
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            background: transparent;
         }
         nav.scrolled {
-            background: rgba(8,8,16,0.97); backdrop-filter: blur(20px);
-            padding: 14px 80px; border-bottom: 1px solid var(--border);
+            background: var(--glass-strong);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 10px 80px;
         }
-        .nav-logo { font-family: 'Cinzel', serif; font-size: 0.95em; font-weight: 600; letter-spacing: 0.35em; color: var(--sacred-gold); }
-        .nav-links { display: flex; gap: 40px; }
-        .nav-links a {
-            font-family: 'Inter', sans-serif; font-size: 0.65em; font-weight: 400;
-            letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke);
-            text-decoration: none; transition: color 0.3s; position: relative;
+        .nav-logo { font-family: 'Cinzel', serif; font-size: 0.95em; font-weight: 600; letter-spacing: 0.35em; color: var(--gold); }
+        .nav-links { display: flex; gap: 35px; align-items: center; }
+        .nav-links a { font-family: 'Inter', sans-serif; font-size: 0.63em; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke); text-decoration: none; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--soft-gold); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .nav-btn {
+            width: 34px; height: 34px; border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass); color: var(--gold);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 0.85em; transition: all 0.3s;
         }
-        .nav-links a:hover { color: var(--soft-gold); }
-        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px; background: var(--sacred-gold); transition: width 0.3s; }
-        .nav-links a:hover::after { width: 100%; }
-        .nav-links a.active { color: var(--sacred-gold); }
-        .nav-links a.active::after { width: 100%; }
-        
-        .page-hero {
-            min-height: 45vh; display: flex; flex-direction: column;
+        .nav-btn:hover { background: var(--glass-hover); border-color: var(--gold); }
+
+        /* HERO */
+        .hero {
+            position: relative; z-index: 1;
+            min-height: 55vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
-            padding: 120px 40px 60px; position: relative; z-index: 1;
+            padding: 100px 40px 50px;
         }
-        .page-hero-om { font-family: 'Cinzel', serif; font-size: 0.9em; letter-spacing: 0.8em; color: var(--sacred-gold); margin-bottom: 30px; opacity: 0.6; }
-        .page-hero h1 { font-family: 'Cinzel', serif; font-size: clamp(2em, 4vw, 3.5em); font-weight: 400; letter-spacing: 0.2em; color: var(--soft-gold); margin-bottom: 12px; }
-        .page-hero-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1em; color: var(--smoke); max-width: 550px; }
-        .page-hero-line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--sacred-gold), transparent); margin: 30px auto 0; }
-        
-        section { position: relative; z-index: 1; padding: 60px 80px 100px; }
-        
-        /* Chapter Navigation */
-        .chapter-nav {
-            display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;
-            max-width: 1000px; margin: 0 auto 60px;
+        .hero-om { font-family: 'Noto Serif Devanagari', serif; font-size: 2.5em; color: var(--gold); letter-spacing: 0.5em; margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; text-shadow: 0 0 60px rgba(201,162,39,0.4); }
+        .hero h1 { font-family: 'Cinzel Decorative', serif; font-size: clamp(2em, 5vw, 4em); font-weight: 900; letter-spacing: 0.12em; background: linear-gradient(135deg, var(--soft-gold), var(--gold), var(--soft-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
+        .hero-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15em; color: var(--smoke); max-width: 580px; margin-top: 15px; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+        .hero-divider { width: 100px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 25px auto 0; opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards; }
+
+        /* SEARCH BAR */
+        .search-section { position: relative; z-index: 1; padding: 0 80px 30px; }
+        .search-wrapper { max-width: 700px; margin: 0 auto; position: relative; }
+        .search-wrapper input {
+            width: 100%; padding: 16px 24px 16px 52px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-strong);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            font-family: 'Cormorant Garamond', serif; font-size: 1.05em;
+            color: var(--moon); outline: none;
+            transition: all 0.3s; border-radius: 4px;
         }
-        .chapter-btn {
-            font-family: 'Cinzel', serif; font-size: 0.75em; letter-spacing: 0.1em;
-            padding: 14px 8px; border: 1px solid var(--border); background: transparent;
-            color: var(--smoke); cursor: pointer; transition: all 0.3s; text-decoration: none;
-            display: block; text-align: center;
+        .search-wrapper input::placeholder { color: var(--smoke); font-style: italic; }
+        .search-wrapper input:focus { border-color: rgba(201,162,39,0.4); box-shadow: 0 0 30px rgba(201,162,39,0.08); }
+        .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 1em; pointer-events: none; }
+        .search-results { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--glass-strong); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-top: none; max-height: 400px; overflow-y: auto; z-index: 100; border-radius: 0 0 4px 4px; }
+        .search-results.active { display: block; }
+        .search-result-item { padding: 14px 24px; border-bottom: 1px solid var(--glass-border); cursor: pointer; transition: background 0.2s; }
+        .search-result-item:last-child { border-bottom: none; }
+        .search-result-item:hover { background: var(--glass-hover); }
+        .search-result-num { font-family: 'Inter', sans-serif; font-size: 0.6em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+        .search-result-text { font-family: 'Noto Serif Devanagari', serif; font-size: 0.95em; color: var(--soft-gold); margin-bottom: 4px; }
+        .search-result-eng { font-family: 'Cormorant Garamond', serif; font-size: 0.85em; color: var(--smoke); font-style: italic; }
+        .search-no-results { padding: 20px 24px; color: var(--smoke); font-style: italic; text-align: center; }
+
+        /* PROGRESS BAR */
+        .progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); z-index: 2000; transition: width 0.2s; }
+
+        /* STICKY CHAPTER NAV */
+        .sticky-chapters { position: sticky; top: 60px; z-index: 100; padding: 20px 80px; background: var(--glass-strong); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); }
+        .sticky-inner { display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+        .sticky-inner::-webkit-scrollbar { display: none; }
+        .ch-btn {
+            font-family: 'Cinzel', serif; font-size: 0.65em; letter-spacing: 0.08em;
+            padding: 8px 16px; border: 1px solid var(--glass-border);
+            background: transparent; color: var(--smoke);
+            cursor: pointer; transition: all 0.3s; white-space: nowrap;
+            text-decoration: none; display: inline-block;
         }
-        .chapter-btn:hover, .chapter-btn.active {
-            border-color: var(--sacred-gold); background: rgba(201,162,39,0.08);
-            color: var(--sacred-gold);
+        .ch-btn:hover, .ch-btn.active { border-color: var(--gold); background: var(--glass-hover); color: var(--soft-gold); }
+        .ch-btn.active { color: var(--gold); border-color: var(--gold); }
+
+        /* CHAPTER INTRO */
+        .chapter-intro-card {
+            max-width: 900px; margin: 0 auto 40px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-strong);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 40px 50px;
+            text-align: center;
         }
-        .chapter-btn span { display: block; font-family: 'Inter', sans-serif; font-size: 0.6em; opacity: 0.5; margin-top: 3px; }
-        
-        /* Chapter Content */
-        .chapter-content { display: none; max-width: 900px; margin: 0 auto; }
-        .chapter-content.active { display: block; }
-        .chapter-intro {
-            text-align: center; padding: 40px; margin-bottom: 50px;
-            border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+        .chapter-intro-card h2 { font-family: 'Cinzel', serif; font-size: 0.65em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+        .chapter-intro-card p { font-style: italic; color: var(--smoke); font-size: 1em; }
+
+        /* MAIN CONTENT */
+        section { position: relative; z-index: 1; padding: 40px 80px 100px; }
+
+        /* VERSE CARDS */
+        .verse-card {
+            max-width: 900px; margin: 0 auto 20px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-strong);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 30px 40px;
+            transition: all 0.3s;
+            position: relative;
         }
-        .chapter-intro h2 {
-            font-family: 'Cinzel', serif; font-size: 0.7em; letter-spacing: 0.4em;
-            text-transform: uppercase; color: var(--sacred-gold); margin-bottom: 10px;
+        .verse-card:hover { border-color: rgba(201,162,39,0.2); background: var(--glass-hover); }
+        .verse-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .verse-num { font-family: 'Inter', sans-serif; font-size: 0.6em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+        .verse-actions { display: flex; gap: 8px; opacity: 0; transition: opacity 0.3s; }
+        .verse-card:hover .verse-actions { opacity: 1; }
+        .verse-action-btn {
+            width: 28px; height: 28px; border-radius: 50%;
+            border: 1px solid var(--glass-border); background: transparent;
+            color: var(--smoke); cursor: pointer; display: flex; align-items: center;
+            justify-content: center; font-size: 0.75em; transition: all 0.2s;
         }
-        .chapter-intro p { font-style: italic; color: rgba(255,255,255,0.4); font-size: 0.95em; }
-        
-        /* Verse Display */
-        .verse-block {
-            padding: 35px 0; border-bottom: 1px solid rgba(201,162,39,0.08);
-        }
-        .verse-block:last-child { border-bottom: none; }
-        .verse-num {
-            font-family: 'Inter', sans-serif; font-size: 0.6em; letter-spacing: 0.3em;
-            text-transform: uppercase; color: var(--sacred-gold); margin-bottom: 10px;
-        }
-        .verse-sanskrit {
-            font-family: 'Cormorant Garamond', serif; font-size: 1.15em; color: var(--soft-gold);
-            margin-bottom: 10px; line-height: 1.9; font-style: italic;
-        }
-        .verse-translit {
-            font-family: 'Cormorant Garamond', serif; font-size: 0.9em; color: rgba(255,255,255,0.4);
-            margin-bottom: 14px; font-style: italic;
-        }
-        .verse-meaning {
-            font-family: 'Cormorant Garamond', serif; font-size: 1.05em; color: var(--moonlight);
-            line-height: 1.8;
-        }
-        
-        footer {
-            position: relative; z-index: 1; padding: 60px 80px; text-align: center;
-            border-top: 1px solid var(--border);
-        }
-        .footer-logo { font-family: 'Cinzel', serif; font-size: 1.2em; letter-spacing: 0.4em; color: var(--sacred-gold); margin-bottom: 12px; }
-        footer p { font-family: 'Inter', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: rgba(255,255,255,0.25); }
-        
-        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+        .verse-action-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--glass-hover); }
+        .verse-sanskrit { font-family: 'Noto Serif Devanagari', serif; font-size: 1.2em; color: var(--soft-gold); line-height: 2; margin-bottom: 10px; }
+        .verse-translit { font-family: 'Cormorant Garamond', serif; font-size: 0.88em; color: rgba(255,255,255,0.38); margin-bottom: 12px; font-style: italic; line-height: 1.7; }
+        .verse-divider { width: 40px; height: 1px; background: var(--glass-border); margin: 15px 0; }
+        .verse-english { font-family: 'Cormorant Garamond', serif; font-size: 1.05em; color: var(--moon); line-height: 1.8; }
+        .verse-hindi { font-family: 'Noto Serif Devanagari', serif; font-size: 0.95em; color: rgba(255,255,255,0.5); margin-top: 10px; font-style: italic; line-height: 1.8; }
+        .verse-chapter-label { font-family: 'Inter', sans-serif; font-size: 0.55em; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(201,162,39,0.4); margin-bottom: 4px; }
+
+        /* TOAST */
+        .toast { position: fixed; bottom: 30px; right: 30px; background: var(--glass-strong); backdrop-filter: blur(16px); border: 1px solid var(--gold); color: var(--soft-gold); padding: 14px 24px; font-family: 'Inter', sans-serif; font-size: 0.7em; letter-spacing: 0.1em; z-index: 9999; border-radius: 4px; transform: translateY(100px); opacity: 0; transition: all 0.4s; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* HIDDEN SEARCH VIEW */
+        #searchView { display: none; }
+        #searchView.active { display: block; }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .reveal { opacity: 0; transform: translateY(15px); transition: all 0.5s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
-        
-        @media (max-width: 1024px) {
-            .chapter-nav { grid-template-columns: repeat(3, 1fr); }
-            nav { padding: 16px 30px; }
-            section { padding: 50px 30px 80px; }
-        }
-        @media (max-width: 640px) {
-            .chapter-nav { grid-template-columns: repeat(2, 1fr); }
-            .nav-links { display: none; }
-        }
+
+        /* MOBILE NAV */
+        .mobile-menu-btn { display: none; width: 34px; height: 34px; border: 1px solid var(--glass-border); background: var(--glass); color: var(--gold); cursor: pointer; align-items: center; justify-content: center; font-size: 1.2em; }
+        .mobile-nav { display: none; position: fixed; top: 60px; left: 0; right: 0; background: var(--glass-strong); backdrop-filter: blur(24px); border-bottom: 1px solid var(--glass-border); padding: 20px; z-index: 999; }
+        .mobile-nav.open { display: block; }
+        .mobile-nav a { display: block; font-family: 'Inter', sans-serif; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke); text-decoration: none; padding: 12px 0; border-bottom: 1px solid var(--glass-border); transition: color 0.3s; }
+        .mobile-nav a:last-child { border-bottom: none; }
+        .mobile-nav a:hover, .mobile-nav a.active { color: var(--gold); }
+
+        footer { position: relative; z-index: 1; padding: 60px 80px; text-align: center; border-top: 1px solid var(--glass-border); }
+        .footer-logo { font-family: 'Cinzel', serif; font-size: 1.2em; letter-spacing: 0.4em; color: var(--gold); margin-bottom: 12px; }
+        footer p { font-family: 'Inter', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: rgba(255,255,255,0.2); }
+        footer a { color: rgba(255,255,255,0.3); text-decoration: none; }
+        footer a:hover { color: var(--gold); }
+
+        @media (max-width: 1024px) { .sticky-chapters, .search-section, section { padding-left: 30px; padding-right: 30px; } nav { padding: 14px 30px; } .sticky-chapters { top: 55px; } }
+        @media (max-width: 640px) { .nav-links { display: none; } .mobile-menu-btn { display: flex; } .sticky-chapters { padding: 15px 20px; } .verse-card { padding: 20px; } }
     </style>
 </head>
 <body>
-    <div class="ambient-bg"></div>
-    
+    <div class="progress-bar" id="progressBar"></div>
+    <canvas id="particles-canvas"></canvas>
+
     <nav id="navbar">
         <div class="nav-logo">THE 1 PATH</div>
         <div class="nav-links">
@@ -140,84 +207,266 @@
             <a href="gita.html" class="active">Bhagavad Gita</a>
             <a href="upanishads.html">Upanishads</a>
             <a href="shlokas.html">Shlokas</a>
+            <a href="about.html">About</a>
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn" id="themeBtn" title="Toggle Theme">☀️</button>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         </div>
     </nav>
-    
-    <div class="page-hero">
-        <div class="page-hero-om">ॐ</div>
-        <h1>BHAGAVAD GITA</h1>
-        <p class="page-hero-sub">The Song of the Divine — 18 chapters revealing the path of action, devotion, knowledge, and surrender</p>
-        <div class="page-hero-line"></div>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="gita.html" class="active">Bhagavad Gita</a>
+        <a href="upanishads.html">Upanishads</a>
+        <a href="shlokas.html">Shlokas</a>
+        <a href="about.html">About</a>
     </div>
-    
-    <section>
-        <!-- Chapter Quick Nav -->
-        <div class="chapter-nav" id="chapterNav"></div>
-        
-        <!-- Chapters loaded by JS -->
-        <div id="chapters-container"></div>
+
+    <div class="hero">
+        <div class="hero-om">ॐ</div>
+        <h1>BHAGAVAD GITA</h1>
+        <p class="hero-sub">The Song of the Divine — 18 chapters, 700 verses revealing the path of action, devotion, knowledge, and surrender</p>
+        <div class="hero-divider"></div>
+    </div>
+
+    <div class="search-section">
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Search any verse, keyword, or concept..." autocomplete="off">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- STICKY CHAPTER NAV -->
+    <div class="sticky-chapters">
+        <div class="sticky-inner" id="chapterNav"></div>
+    </div>
+
+    <!-- CHAPTERS CONTAINER -->
+    <section id="chaptersContainer"></section>
+
+    <!-- SEARCH VIEW (hidden by default) -->
+    <section id="searchView">
+        <div id="searchResultsContent"></div>
     </section>
-    
+
     <footer>
         <div class="footer-logo">THE 1 PATH</div>
-        <p>Bhagavad Gita · 18 Chapters · 700 Verses · The Eternal Song of the Divine</p>
+        <p>Bhagavad Gita · 18 Chapters · 700 Verses · <a href="index.html">Home</a> · <a href="upanishads.html">Upanishads</a></p>
     </footer>
-    
+
+    <div class="toast" id="toast"></div>
+
     <script src="gita-data.js"></script>
     <script>
-        function renderChapterNav() {
-            const nav = document.getElementById('chapterNav');
-            nav.innerHTML = GITA.chapters.map((ch, i) =>
-                `<button class="chapter-btn${i === 0 ? ' active' : ''}" onclick="showChapter(${i})">
-                    Ch ${i+1}<span>${ch.name.split(' ')[0]}</span>
-                </button>`
-            ).join('');
+    // ===== PARTICLES =====
+    (function() {
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d'); let w, h, particles = [];
+        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+        resize(); window.addEventListener('resize', resize);
+        const cols = ['#C9A227','#E8C84A','#D4AF37','rgba(201,162,39,0.5)'];
+        for (let i = 0; i < 50; i++) {
+            particles.push({ x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.5+0.3,
+                dx: (Math.random()-0.5)*0.3, dy: (Math.random()-0.5)*0.3,
+                color: cols[Math.floor(Math.random()*cols.length)],
+                alpha: Math.random()*0.4+0.1 });
         }
-        
-        function showChapter(idx) {
-            document.querySelectorAll('.chapter-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
-            document.querySelectorAll('.chapter-content').forEach(c => c.classList.remove('active'));
-            const el = document.getElementById('ch-' + idx);
-            el.classList.add('active');
-            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        function draw() {
+            ctx.clearRect(0,0,w,h);
+            particles.forEach(p => {
+                ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+                ctx.fillStyle=p.color; ctx.globalAlpha=p.alpha; ctx.fill();
+                p.x+=p.dx; p.y+=p.dy;
+                if(p.x<0||p.x>w) p.dx*=-1; if(p.y<0||p.y>h) p.dy*=-1;
+            });
+            ctx.globalAlpha=1; requestAnimationFrame(draw);
         }
-        
-        function renderChapters() {
-            const container = document.getElementById('chapters-container');
-            container.innerHTML = GITA.chapters.map((ch, ci) => `
-                <div class="chapter-content${ci === 0 ? ' active' : ''}" id="ch-${ci}">
-                    <div class="chapter-intro">
-                        <h2>Chapter ${ci+1} — ${ch.name}</h2>
-                        <p>${ch.theme}</p>
-                    </div>
-                    ${ch.verses.map((v, vi) => `
-                        <div class="verse-block reveal">
+        draw();
+    })();
+
+    // ===== SCROLL REVEAL =====
+    function initReveal() {
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*60); });
+        }, {threshold: 0.05});
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    }
+
+    // ===== PROGRESS BAR =====
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = docHeight > 0 ? (scrollTop/docHeight)*100 : 0;
+        document.getElementById('progressBar').style.width = pct + '%';
+        document.getElementById('navbar').classList.toggle('scrolled', scrollTop > 50);
+    });
+
+    // ===== THEME =====
+    const themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('light');
+        themeBtn.textContent = document.body.classList.contains('light') ? '🌙' : '☀️';
+        localStorage.setItem('theme', document.body.classList.contains('light')?'light':'dark');
+    });
+    if(localStorage.getItem('theme')==='light'){ document.body.classList.add('light'); themeBtn.textContent='🌙'; }
+
+    // ===== MOBILE MENU =====
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+        document.getElementById('mobileNav').classList.toggle('open');
+    });
+
+    // ===== TOAST =====
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg; t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // ===== COPY VERSE =====
+    function copyVerse(verse) {
+        navigator.clipboard.writeText(`${verse.sanskrit}\n\n"${verse.english}"\n— Bhagavad Gita ${verse.num}`).then(() => showToast('Verse copied! ✨'));
+    }
+
+    // ===== SHARE VERSE =====
+    function shareVerse(verse) {
+        if (navigator.share) {
+            navigator.share({ title: `Bhagavad Gita ${verse.num}`, text: `"${verse.english}" — Bhagavad Gita ${verse.num}`, url: window.location.href });
+        } else {
+            copyVerse(verse);
+        }
+    }
+
+    // ===== RENDER CHAPTER NAV =====
+    function renderChapterNav() {
+        const nav = document.getElementById('chapterNav');
+        nav.innerHTML = GITA.chapters.map((ch, i) =>
+            `<a class="ch-btn${i===0?' active':''}" href="#ch-${i}">${i+1}. ${ch.name.split(' ').slice(0,2).join(' ')}</a>`
+        ).join('');
+    }
+
+    // ===== RENDER ALL CHAPTERS =====
+    function renderChapters() {
+        const container = document.getElementById('chaptersContainer');
+        container.innerHTML = GITA.chapters.map((ch, ci) => `
+            <div class="chapter-block" id="ch-${ci}">
+                <div class="chapter-intro-card reveal">
+                    <h2>Chapter ${ci+1} — ${ch.name}</h2>
+                    <p>${ch.theme}</p>
+                </div>
+                ${ch.verses.map(v => `
+                    <div class="verse-card reveal">
+                        <div class="verse-top">
                             <div class="verse-num">Verse ${v.num}</div>
-                            <div class="verse-sanskrit">${v.sanskrit}</div>
-                            <div class="verse-translit">${v.translit}</div>
-                            <div class="verse-meaning">${v.translation}</div>
+                            <div class="verse-actions">
+                                <button class="verse-action-btn" onclick='copyVerse(${JSON.stringify(v).replace(/'/g,"\\'")})' title="Copy">📋</button>
+                                <button class="verse-action-btn" onclick='shareVerse(${JSON.stringify(v).replace(/'/g,"\\'")})' title="Share">🔗</button>
+                            </div>
                         </div>
-                    `).join('')}
+                        <div class="verse-sanskrit">${v.sanskrit}</div>
+                        <div class="verse-translit">${v.translit || ''}</div>
+                        <div class="verse-divider"></div>
+                        <div class="verse-english">${v.english}</div>
+                        ${v.hindi ? `<div class="verse-hindi">${v.hindi}</div>` : ''}
+                    </div>
+                `).join('')}
+            </div>
+        `).join('');
+        initReveal();
+    }
+
+    // ===== SEARCH =====
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const searchView = document.getElementById('searchView');
+    const chaptersContainer = document.getElementById('chaptersContainer');
+
+    function performSearch(query) {
+        if (!query.trim()) { searchResults.classList.remove('active'); searchView.classList.remove('active'); chaptersContainer.style.display='block'; return; }
+        chaptersContainer.style.display='none';
+        searchView.classList.add('active');
+        const q = query.toLowerCase();
+        const results = [];
+        GITA.chapters.forEach((ch, ci) => {
+            ch.verses.forEach(v => {
+                if ((v.sanskrit||'').toLowerCase().includes(q) || (v.english||'').toLowerCase().includes(q) || (v.hindi||'').toLowerCase().includes(q) || (v.translit||'').toLowerCase().includes(q) || v.num.includes(q) || ch.name.toLowerCase().includes(q)) {
+                    results.push({...v, chapterIdx: ci, chapterName: ch.name});
+                }
+            });
+        });
+        const src = document.getElementById('searchResultsContent');
+        if (results.length === 0) {
+            src.innerHTML = `<div style="text-align:center;padding:60px;color:var(--smoke);font-style:italic;">No verses found for "${query}"</div>`;
+        } else {
+            src.innerHTML = `<div style="max-width:900px;margin:0 auto 30px;font-family:'Inter',sans-serif;font-size:0.65em;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">${results.length} result${results.length>1?'s':''} found</div>` +
+            results.map(r => `
+                <div class="verse-card reveal" onclick="document.getElementById('ch-${r.chapterIdx}').scrollIntoView({behavior:'smooth'}); searchInput.value=''; searchView.classList.remove('active'); chaptersContainer.style.display='block';">
+                    <div class="verse-top">
+                        <div class="verse-num">${r.num} — Ch ${r.chapterIdx+1}: ${r.chapterName}</div>
+                        <div class="verse-actions" style="opacity:1">
+                            <button class="verse-action-btn" onclick="event.stopPropagation();copyVerse(${JSON.stringify(r).replace(/'/g,"\\'")})" title="Copy">📋</button>
+                        </div>
+                    </div>
+                    <div class="verse-sanskrit">${r.sanskrit}</div>
+                    <div class="verse-divider"></div>
+                    <div class="verse-english">${r.english}</div>
+                    ${r.hindi ? `<div class="verse-hindi">${r.hindi}</div>` : ''}
                 </div>
             `).join('');
-            
-            // Observe reveals
-            document.querySelectorAll('.reveal').forEach(el => {
-                setTimeout(() => {
-                    const obs = new IntersectionObserver((entries) => {
-                        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-                    }, { threshold: 0.05 });
-                    obs.observe(el);
-                }, 100);
-            });
         }
-        
-        window.addEventListener('scroll', () => {
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+        initReveal();
+    }
+
+    searchInput.addEventListener('input', (e) => {
+        const q = e.target.value;
+        if (!q.trim()) { searchResults.classList.remove('active'); searchView.classList.remove('active'); chaptersContainer.style.display='block'; return; }
+        const q2 = q.toLowerCase();
+        const quickResults = [];
+        GITA.chapters.forEach((ch, ci) => {
+            ch.verses.forEach(v => {
+                if ((v.sanskrit||'').toLowerCase().includes(q2) || (v.english||'').toLowerCase().includes(q2) || v.num.includes(q2)) {
+                    quickResults.push(v);
+                }
+            });
         });
-        
-        renderChapterNav();
-        renderChapters();
+        if (quickResults.length === 0) {
+            searchResults.innerHTML = `<div class="search-no-results">No verses found</div>`;
+        } else {
+            searchResults.innerHTML = quickResults.slice(0,8).map(v => `
+                <div class="search-result-item" onclick="searchInput.value='${v.num}'; searchResults.classList.remove('active'); performSearch('${v.num}');">
+                    <div class="search-result-num">Verse ${v.num}</div>
+                    <div class="search-result-text">${v.sanskrit.substring(0,60)}...</div>
+                    <div class="search-result-eng">${v.english.substring(0,80)}...</div>
+                </div>
+            `).join('');
+        }
+        searchResults.classList.add('active');
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { performSearch(searchInput.value); searchResults.classList.remove('active'); }
+        if (e.key === 'Escape') { searchResults.classList.remove('active'); searchInput.blur(); }
+    });
+
+    // Close search on outside click
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-wrapper')) searchResults.classList.remove('active');
+    });
+
+    // ===== STICKY SCROLL HIGHLIGHT =====
+    const chBtns = document.querySelectorAll('.ch-btn');
+    window.addEventListener('scroll', () => {
+        let current = 0;
+        document.querySelectorAll('.chapter-block').forEach((block, i) => {
+            if (block.getBoundingClientRect().top < 200) current = i;
+        });
+        chBtns.forEach((b,i) => b.classList.toggle('active', i===current));
+    });
+
+    // ===== INIT =====
+    renderChapterNav();
+    renderChapters();
     </script>
 </body>
 </html>

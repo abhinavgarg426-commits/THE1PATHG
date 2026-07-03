@@ -4,56 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upanishads — The 1 Path</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Noto+Serif+Devanagari:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --midnight: #080810; --deep-blue: #0D1525; --sacred-gold: #C9A227; --soft-gold: #F5E6C8; --moonlight: #E8E4D9; --smoke: rgba(255,255,255,0.5); --border: rgba(201,162,39,0.12); }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Cormorant Garamond', serif; background: var(--midnight); color: var(--moonlight); line-height: 1.8; overflow-x: hidden; }
-        .ambient-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at 20% 10%, rgba(201,162,39,0.04) 0%, transparent 50%), radial-gradient(ellipse at 80% 90%, rgba(139,38,53,0.03) 0%, transparent 50%); }
-        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 22px 80px; transition: all 0.5s ease; }
-        nav.scrolled { background: rgba(8,8,16,0.97); backdrop-filter: blur(20px); padding: 14px 80px; border-bottom: 1px solid var(--border); }
-        .nav-logo { font-family: 'Cinzel', serif; font-size: 0.95em; font-weight: 600; letter-spacing: 0.35em; color: var(--sacred-gold); }
-        .nav-links { display: flex; gap: 40px; }
-        .nav-links a { font-family: 'Inter', sans-serif; font-size: 0.65em; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke); text-decoration: none; transition: color 0.3s; position: relative; }
-        .nav-links a:hover { color: var(--soft-gold); }
-        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px; background: var(--sacred-gold); transition: width 0.3s; }
-        .nav-links a:hover::after { width: 100%; }
-        .nav-links a.active { color: var(--sacred-gold); }
-        .nav-links a.active::after { width: 100%; }
-        .page-hero { min-height: 45vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 40px 60px; position: relative; z-index: 1; }
-        .page-hero-om { font-family: 'Cinzel', serif; font-size: 0.9em; letter-spacing: 0.8em; color: var(--sacred-gold); margin-bottom: 30px; opacity: 0.6; }
-        .page-hero h1 { font-family: 'Cinzel', serif; font-size: clamp(2em, 4vw, 3.5em); font-weight: 400; letter-spacing: 0.2em; color: var(--soft-gold); margin-bottom: 12px; }
-        .page-hero-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1em; color: var(--smoke); max-width: 550px; }
-        .page-hero-line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--sacred-gold), transparent); margin: 30px auto 0; }
-        section { position: relative; z-index: 1; padding: 60px 80px 100px; }
-        .upanishad-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; max-width: 1100px; margin: 0 auto 60px; }
-        .up-card { border: 1px solid var(--border); padding: 35px 30px; transition: all 0.4s ease; cursor: pointer; }
-        .up-card:hover { border-color: rgba(201,162,39,0.3); background: rgba(201,162,39,0.02); }
-        .up-card.active { border-color: var(--sacred-gold); background: rgba(201,162,39,0.04); }
-        .up-card-num { font-family: 'Inter', sans-serif; font-size: 0.6em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--sacred-gold); margin-bottom: 10px; }
-        .up-card h3 { font-family: 'Cinzel', serif; font-size: 1em; letter-spacing: 0.12em; color: var(--soft-gold); margin-bottom: 8px; }
-        .up-card p { font-size: 0.9em; color: rgba(255,255,255,0.4); font-style: italic; }
-        .up-detail { display: none; max-width: 900px; margin: 0 auto; }
-        .up-detail.active { display: block; }
-        .up-header { text-align: center; padding: 40px; margin-bottom: 50px; border-bottom: 1px solid var(--border); }
-        .up-header h2 { font-family: 'Cinzel', serif; font-size: 1.4em; letter-spacing: 0.15em; color: var(--soft-gold); margin-bottom: 8px; }
-        .up-header p { font-style: italic; color: rgba(255,255,255,0.4); font-size: 1em; }
-        .verse-block { padding: 35px 0; border-bottom: 1px solid rgba(201,162,39,0.08); }
-        .verse-block:last-child { border-bottom: none; }
-        .verse-mantra { font-family: 'Cormorant Garamond', serif; font-size: 1.15em; color: var(--soft-gold); margin-bottom: 10px; line-height: 1.9; font-style: italic; }
-        .verse-translit { font-family: 'Cormorant Garamond', serif; font-size: 0.88em; color: rgba(255,255,255,0.38); margin-bottom: 14px; font-style: italic; }
-        .verse-meaning { font-family: 'Cormorant Garamond', serif; font-size: 1.05em; color: var(--moonlight); }
-        .verse-ref { font-family: 'Inter', sans-serif; font-size: 0.6em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sacred-gold); margin-top: 12px; }
-        footer { position: relative; z-index: 1; padding: 60px 80px; text-align: center; border-top: 1px solid var(--border); }
-        .footer-logo { font-family: 'Cinzel', serif; font-size: 1.2em; letter-spacing: 0.4em; color: var(--sacred-gold); margin-bottom: 12px; }
-        footer p { font-family: 'Inter', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: rgba(255,255,255,0.25); }
-        @media (max-width: 1024px) { .upanishad-grid { grid-template-columns: 1fr; } nav { padding: 16px 30px; } section { padding: 50px 30px 80px; } }
-        @media (max-width: 640px) { .nav-links { display: none; } }
+        :root { --midnight:#06060F; --deep:#0A0A1A; --gold:#C9A227; --gold-light:#E8C84A; --soft-gold:#F5E6C8; --moon:#E8E4D9; --smoke:rgba(255,255,255,0.5); --glass:rgba(255,255,255,0.03); --glass-border:rgba(201,162,39,0.12); --glass-hover:rgba(201,162,39,0.06); --glass-strong:rgba(10,10,26,0.88); }
+        *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body { font-family:'Cormorant Garamond',serif; background:var(--midnight); color:var(--moon); overflow-x:hidden; }
+        #particles-canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:0.3; }
+        nav { position:fixed; top:0; left:0; right:0; z-index:1000; display:flex; justify-content:space-between; align-items:center; padding:18px 80px; transition:all 0.4s; background:transparent; }
+        nav.scrolled { background:var(--glass-strong); backdrop-filter:blur(24px); border-bottom:1px solid var(--glass-border); padding:10px 80px; }
+        .nav-logo { font-family:'Cinzel',serif; font-size:0.95em; font-weight:600; letter-spacing:0.35em; color:var(--gold); }
+        .nav-links { display:flex; gap:35px; }
+        .nav-links a { font-family:'Inter',sans-serif; font-size:0.63em; font-weight:400; letter-spacing:0.2em; text-transform:uppercase; color:var(--smoke); text-decoration:none; transition:color 0.3s; position:relative; }
+        .nav-links a::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:1px; background:var(--gold); transition:width 0.3s; }
+        .nav-links a:hover,.nav-links a.active { color:var(--soft-gold); }
+        .nav-links a:hover::after,.nav-links a.active::after { width:100%; }
+        .nav-right { display:flex; align-items:center; }
+        .nav-btn { width:34px; height:34px; border-radius:50%; border:1px solid var(--glass-border); background:var(--glass); color:var(--gold); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:0.85em; transition:all 0.3s; }
+        .nav-btn:hover { background:var(--glass-hover); border-color:var(--gold); }
+        .hero { position:relative; z-index:1; min-height:55vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:100px 40px 50px; }
+        .hero-om { font-family:'Noto Serif Devanagari',serif; font-size:2.5em; color:var(--gold); letter-spacing:0.5em; margin-bottom:20px; opacity:0; animation:fadeUp 0.8s ease 0.2s forwards; text-shadow:0 0 60px rgba(201,162,39,0.4); }
+        .hero h1 { font-family:'Cinzel Decorative',serif; font-size:clamp(2em,5vw,4em); font-weight:900; letter-spacing:0.12em; background:linear-gradient(135deg,var(--soft-gold),var(--gold),var(--soft-gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; opacity:0; animation:fadeUp 0.8s ease 0.4s forwards; }
+        .hero-sub { font-style:italic; font-size:1.15em; color:var(--smoke); max-width:580px; margin-top:15px; opacity:0; animation:fadeUp 0.8s ease 0.6s forwards; }
+        .hero-divider { width:100px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:25px auto 0; opacity:0; animation:fadeUp 0.8s ease 0.8s forwards; }
+        section { position:relative; z-index:1; padding:40px 80px 100px; }
+        .up-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; max-width:1100px; margin:0 auto 50px; }
+        .up-card { border:1px solid var(--glass-border); background:var(--glass-strong); backdrop-filter:blur(12px); padding:35px 30px; transition:all 0.4s; cursor:pointer; }
+        .up-card:hover,.up-card.active { border-color:rgba(201,162,39,0.25); background:var(--glass-hover); }
+        .up-card.active { border-color:var(--gold); }
+        .up-num { font-family:'Inter',sans-serif; font-size:0.6em; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+        .up-name { font-family:'Noto Serif Devanagari',serif; font-size:1.5em; color:var(--soft-gold); margin-bottom:5px; }
+        .up-subtitle { font-size:0.95em; color:var(--smoke); font-style:italic; }
+        .up-detail { display:none; max-width:900px; margin:0 auto; }
+        .up-detail.active { display:block; }
+        .up-header { text-align:center; padding:40px; border-bottom:1px solid var(--glass-border); margin-bottom:0; }
+        .up-header h2 { font-family:'Cinzel',serif; font-size:0.7em; letter-spacing:0.35em; text-transform:uppercase; color:var(--soft-gold); margin-bottom:5px; }
+        .up-header p { color:var(--smoke); font-style:italic; }
+        .verse-card { border:1px solid var(--glass-border); border-top:none; background:var(--glass-strong); padding:30px 40px; position:relative; }
+        .verse-card:last-child { border-bottom:none; }
+        .verse-card:hover { background:var(--glass-hover); }
+        .verse-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+        .verse-num { font-family:'Inter',sans-serif; font-size:0.58em; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); }
+        .verse-actions { display:flex; gap:6px; opacity:0; transition:opacity 0.3s; }
+        .verse-card:hover .verse-actions { opacity:1; }
+        .verse-action-btn { width:26px; height:26px; border-radius:50%; border:1px solid var(--glass-border); background:transparent; color:var(--smoke); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:0.7em; transition:all 0.2s; }
+        .verse-action-btn:hover { border-color:var(--gold); color:var(--gold); }
+        .verse-sanskrit { font-family:'Noto Serif Devanagari',serif; font-size:1.15em; color:var(--soft-gold); line-height:2; margin-bottom:8px; }
+        .verse-translit { font-size:0.88em; color:rgba(255,255,255,0.38); margin-bottom:10px; font-style:italic; }
+        .verse-divider { width:40px; height:1px; background:var(--glass-border); margin:12px 0; }
+        .verse-eng { font-size:1.05em; color:var(--moon); line-height:1.8; }
+        .verse-hindi { font-family:'Noto Serif Devanagari',serif; font-size:0.92em; color:rgba(255,255,255,0.5); margin-top:8px; font-style:italic; line-height:1.8; }
+        .verse-ref { font-family:'Inter',sans-serif; font-size:0.58em; letter-spacing:0.2em; text-transform:uppercase; color:rgba(201,162,39,0.4); margin-top:10px; }
+        footer { position:relative; z-index:1; padding:60px 80px; text-align:center; border-top:1px solid var(--glass-border); }
+        .footer-logo { font-family:'Cinzel',serif; font-size:1.2em; letter-spacing:0.4em; color:var(--gold); margin-bottom:12px; }
+        footer p { font-family:'Inter',sans-serif; font-size:0.65em; letter-spacing:0.1em; color:rgba(255,255,255,0.2); }
+        footer a { color:rgba(255,255,255,0.3); text-decoration:none; }
+        footer a:hover { color:var(--gold); }
+        .reveal { opacity:0; transform:translateY(15px); transition:all 0.5s ease; }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        @media(max-width:1024px) { .up-grid { grid-template-columns:1fr; } nav { padding:14px 30px; } section { padding-left:30px; padding-right:30px; } }
+        @media(max-width:640px) { .nav-links { display:none; } .verse-card { padding:20px; } }
     </style>
 </head>
 <body>
-    <div class="ambient-bg"></div>
+    <canvas id="particles-canvas"></canvas>
     <nav id="navbar">
         <div class="nav-logo">THE 1 PATH</div>
         <div class="nav-links">
@@ -61,61 +78,32 @@
             <a href="gita.html">Bhagavad Gita</a>
             <a href="upanishads.html" class="active">Upanishads</a>
             <a href="shlokas.html">Shlokas</a>
+            <a href="about.html">About</a>
         </div>
+        <div class="nav-right"><button class="nav-btn" id="themeBtn" title="Toggle Theme">☀️</button></div>
     </nav>
-    <div class="page-hero">
-        <div class="page-hero-om">ॐ</div>
+    <div class="hero">
+        <div class="hero-om">ॐ</div>
         <h1>UPANISHADS</h1>
-        <p class="page-hero-sub">The end of knowledge — where the seeker discovers the identity of the soul and the absolute. Vedanta's supreme revelation.</p>
-        <div class="page-hero-line"></div>
+        <p class="hero-sub">The end of knowledge — where the seeker discovers the identity of the soul and the absolute. Vedanta's supreme revelation.</p>
+        <div class="hero-divider"></div>
     </div>
     <section>
-        <div class="upanishad-grid" id="upGrid"></div>
+        <div class="up-grid" id="upGrid"></div>
         <div id="upDetails"></div>
     </section>
     <footer>
         <div class="footer-logo">THE 1 PATH</div>
-        <p>Principal Upanishads · Vedantic Wisdom · The End of All Knowledge</p>
+        <p>10 Principal Upanishads · <a href="index.html">Home</a> · <a href="gita.html">Bhagavad Gita</a></p>
     </footer>
     <script src="upanishad-data.js"></script>
     <script>
-        function renderUpanishads() {
-            const grid = document.getElementById('upGrid');
-            grid.innerHTML = UPANISHADS.map((u, i) =>
-                `<div class="up-card${i === 0 ? ' active' : ''}" onclick="showUp(${i})">
-                    <div class="up-card-num">${u.name}</div>
-                    <h3>${u.sanskrit_name}</h3>
-                    <p>${u.subtitle}</p>
-                </div>`
-            ).join('');
-            
-            const details = document.getElementById('upDetails');
-            details.innerHTML = UPANISHADS.map((u, i) =>
-                `<div class="up-detail${i === 0 ? ' active' : ''}" id="upd-${i}">
-                    <div class="up-header">
-                        <h2>${u.name}</h2>
-                        <p>${u.subtitle} · ${u.verses.length} verses</p>
-                    </div>
-                    ${u.verses.map(v => `
-                        <div class="verse-block">
-                            <div class="verse-mantra">${v.sanskrit}</div>
-                            <div class="verse-translit">${v.translit}</div>
-                            <div class="verse-meaning">${v.translation}</div>
-                            <div class="verse-ref">${v.ref}</div>
-                        </div>
-                    `).join('')}
-                </div>`
-            ).join('');
-        }
-        function showUp(idx) {
-            document.querySelectorAll('.up-card').forEach((c, i) => c.classList.toggle('active', i === idx));
-            document.querySelectorAll('.up-detail').forEach(d => d.classList.remove('active'));
-            const el = document.getElementById('upd-' + idx);
-            el.classList.add('active');
-            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40); });
-        renderUpanishads();
+    (function(){const canvas=document.getElementById('particles-canvas');const ctx=canvas.getContext('2d');let w,h,ps=[];function r(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}r();window.addEventListener('resize',r);for(let i=0;i<50;i++){ps.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+0.3,dx:(Math.random()-0.5)*0.3,dy:(Math.random()-0.5)*0.3,color:['#C9A227','#E8C84A','#D4AF37'][Math.floor(Math.random()*3)],alpha:Math.random()*0.4+0.1});}function d(){ctx.clearRect(0,0,w,h);ps.forEach(p){ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.color;ctx.globalAlpha=p.alpha;ctx.fill();p.x+=p.dx;p.y+=p.dy;if(p.x<0||p.x>w)p.dx*=-1;if(p.y<0||p.y>h)p.dy*=-1;}ctx.globalAlpha=1;requestAnimationFrame(d);}d();})();
+    function initReveal(){const o=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*60);});},{threshold:0.05});document.querySelectorAll('.reveal').forEach(el=>o.observe(el));}
+    window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+    const themeBtn=document.getElementById('themeBtn');themeBtn.addEventListener('click',()=>{document.body.classList.toggle('light');themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');});if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');themeBtn.textContent='🌙';}
+    function copyVerse(v){navigator.clipboard.writeText(`${v.sanskrit}\n\n"${v.translation}"`).then(()=>{const t=document.createElement('div');t.textContent='Copied! ✨';t.style.cssText='position:fixed;bottom:30px;right:30px;background:rgba(10,10,26,0.95);border:1px solid #C9A227;color:#F5E6C8;padding:12px 24px;font-family:Inter,sans-serif;font-size:0.7em;z-index:9999;border-radius:4px';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);});}
+    function renderUpanishads(){const grid=document.getElementById('upGrid');grid.innerHTML=UPANISHADS.map((u,i)=>`<div class="up-card${i===0?' active':''}" onclick="showUp(${i})"><div class="up-num">${u.name}</div><div class="up-name">${u.sanskrit_name}</div><div class="up-subtitle">${u.subtitle}</div></div>`).join('');const det=document.getElementById('upDetails');det.innerHTML=UPANISHADS.map((u,i)=>`<div class="up-detail${i===0?' active':''}" id="upd-${i}"><div class="up-header"><h2>${u.name} — ${u.sanskrit_name}</h2><p>${u.subtitle} · ${u.verses.length} verses</p></div>${u.verses.map(v=>`<div class="verse-card reveal"><div class="verse-top"><div class="verse-num">${v.ref}</div><div class="verse-actions"><button class="verse-action-btn" onclick="copyVerse(${JSON.stringify(v).replace(/'/g,"\\'")})" title="Copy">📋</button></div></div><div class="verse-sanskrit">${v.sanskrit}</div><div class="verse-translit">${v.translit}</div><div class="verse-divider"></div><div class="verse-eng">${v.translation}</div>${v.hindi?`<div class="verse-hindi">${v.hindi}</div>`:''}<div class="verse-ref">${v.ref}</div></div>`).join('')}</div>`).join('');initReveal();}function showUp(idx){document.querySelectorAll('.up-card').forEach((c,i)=>c.classList.toggle('active',i===idx));document.querySelectorAll('.up-detail').forEach(d=>d.classList.remove('active'));const el=document.getElementById('upd-'+idx);el.classList.add('active');el.scrollIntoView({behavior:'smooth',block:'start'});}renderUpanishads();
     </script>
 </body>
 </html>

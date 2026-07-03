@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 1 Path — Divine Wisdom of the Ages</title>
+    <meta name="description" content="Explore the Bhagavad Gita, Upanishads, and Sacred Shlokas — the eternal path to freedom, purpose, and inner peace.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Noto+Serif+Devanagari:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --midnight:#06060F; --deep:#0A0A1A; --gold:#C9A227; --gold-light:#E8C84A; --soft-gold:#F5E6C8; --moon:#E8E4D9; --smoke:rgba(255,255,255,0.5); --glass:rgba(255,255,255,0.03); --glass-border:rgba(201,162,39,0.12); --glass-hover:rgba(201,162,39,0.06); --glass-strong:rgba(10,10,26,0.88); }
+        *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body { font-family:'Cormorant Garamond',serif; background:var(--midnight); color:var(--moon); overflow-x:hidden; }
+
+        /* PARTICLES */
+        #particles-canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:0.3; }
+
+        /* NAV */
+        nav { position:fixed; top:0; left:0; right:0; z-index:1000; display:flex; justify-content:space-between; align-items:center; padding:18px 80px; transition:all 0.4s; background:transparent; }
+        nav.scrolled { background:var(--glass-strong); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); border-bottom:1px solid var(--glass-border); padding:10px 80px; }
+        .nav-logo { font-family:'Cinzel',serif; font-size:0.95em; font-weight:600; letter-spacing:0.35em; color:var(--gold); }
+        .nav-links { display:flex; gap:35px; }
+        .nav-links a { font-family:'Inter',sans-serif; font-size:0.63em; font-weight:400; letter-spacing:0.2em; text-transform:uppercase; color:var(--smoke); text-decoration:none; transition:color 0.3s; position:relative; }
+        .nav-links a::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:1px; background:var(--gold); transition:width 0.3s; }
+        .nav-links a:hover,.nav-links a.active { color:var(--soft-gold); }
+        .nav-links a:hover::after,.nav-links a.active::after { width:100%; }
+        .nav-right { display:flex; align-items:center; gap:10px; }
+        .nav-btn { width:34px; height:34px; border-radius:50%; border:1px solid var(--glass-border); background:var(--glass); color:var(--gold); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:0.85em; transition:all 0.3s; }
+        .nav-btn:hover { background:var(--glass-hover); border-color:var(--gold); }
+
+        /* HERO */
+        .hero { position:relative; z-index:1; min-height:55vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:100px 40px 50px; }
+        .hero-om { font-family:'Noto Serif Devanagari',serif; font-size:2.5em; color:var(--gold); letter-spacing:0.5em; margin-bottom:20px; opacity:0; animation:fadeUp 0.8s ease 0.2s forwards; text-shadow:0 0 60px rgba(201,162,39,0.4); }
+        .hero h1 { font-family:'Cinzel Decorative',serif; font-size:clamp(2em,5vw,4em); font-weight:900; letter-spacing:0.12em; background:linear-gradient(135deg,var(--soft-gold),var(--gold),var(--soft-gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; opacity:0; animation:fadeUp 0.8s ease 0.4s forwards; }
+        .hero-sub { font-style:italic; font-size:1.15em; color:var(--smoke); max-width:580px; margin-top:15px; opacity:0; animation:fadeUp 0.8s ease 0.6s forwards; }
+        .hero-divider { width:100px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:25px auto 0; opacity:0; animation:fadeUp 0.8s ease 0.8s forwards; }
+
+        /* STATS */
+        .stats-section { position:relative; z-index:1; padding:0 80px 80px; }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; max-width:1000px; margin:0 auto; }
+        .stat-card { border:1px solid var(--glass-border); background:var(--glass-strong); backdrop-filter:blur(16px); padding:30px 20px; text-align:center; }
+        .stat-num { font-family:'Cinzel',serif; font-size:2.5em; font-weight:700; color:var(--gold); line-height:1; }
+        .stat-label { font-family:'Inter',sans-serif; font-size:0.6em; letter-spacing:0.2em; text-transform:uppercase; color:var(--smoke); margin-top:8px; }
+
+        /* ABOUT CONTENT */
+        .about-section { position:relative; z-index:1; padding:40px 80px 100px; max-width:1100px; margin:0 auto; }
+        .about-block { margin-bottom:50px; }
+        .about-block h2 { font-family:'Cinzel',serif; font-size:0.65em; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); margin-bottom:15px; }
+        .about-block p { font-size:1.1em; line-height:2; color:var(--moon); }
+        .about-block.quote { border-left:2px solid var(--gold); padding-left:30px; }
+        .about-block.quote p { font-style:italic; color:var(--smoke); font-size:1.2em; }
+        .about-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:20px; }
+        .about-card { border:1px solid var(--glass-border); background:var(--glass-strong); padding:30px; }
+        .about-card h3 { font-family:'Cinzel',serif; font-size:0.8em; letter-spacing:0.15em; color:var(--soft-gold); margin-bottom:10px; }
+        .about-card p { font-size:0.95em; color:var(--smoke); line-height:1.8; }
+
+        /* FEATURES */
+        .features-section { position:relative; z-index:1; padding:0 80px 80px; }
+        .features-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1100px; margin:0 auto; }
+        .feature-card { border:1px solid var(--glass-border); background:var(--glass-strong); backdrop-filter:blur(12px); padding:35px 28px; transition:all 0.4s; }
+        .feature-card:hover { border-color:rgba(201,162,39,0.2); background:var(--glass-hover); transform:translateY(-3px); }
+        .feature-icon { font-size:1.8em; margin-bottom:15px; }
+        .feature-card h3 { font-family:'Cinzel',serif; font-size:0.75em; letter-spacing:0.15em; color:var(--soft-gold); margin-bottom:10px; }
+        .feature-card p { font-size:0.9em; color:var(--smoke); line-height:1.7; }
+
+        footer { position:relative; z-index:1; padding:60px 80px; text-align:center; border-top:1px solid var(--glass-border); }
+        .footer-logo { font-family:'Cinzel',serif; font-size:1.2em; letter-spacing:0.4em; color:var(--gold); margin-bottom:12px; }
+        footer p { font-family:'Inter',sans-serif; font-size:0.65em; letter-spacing:0.1em; color:rgba(255,255,255,0.2); }
+        footer a { color:rgba(255,255,255,0.3); text-decoration:none; }
+        footer a:hover { color:var(--gold); }
+
+        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        .reveal { opacity:0; transform:translateY(15px); transition:all 0.5s ease; }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+
+        @media(max-width:1024px) { .stats-grid,.features-grid,.about-cards { grid-template-columns:1fr 1fr; } nav { padding:14px 30px; } .stats-section,.about-section,.features-section { padding-left:30px; padding-right:30px; } }
+        @media(max-width:640px) { .stats-grid,.features-grid,.about-cards { grid-template-columns:1fr; } .nav-links { display:none; } }
+    </style>
+</head>
+<body>
+    <canvas id="particles-canvas"></canvas>
+
+    <nav id="navbar">
+        <div class="nav-logo">THE 1 PATH</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="gita.html">Bhagavad Gita</a>
+            <a href="upanishads.html">Upanishads</a>
+            <a href="shlokas.html">Shlokas</a>
+            <a href="about.html" class="active">About</a>
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn" id="themeBtn" title="Toggle Theme">☀️</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-om">ॐ</div>
+        <h1>ABOUT THE 1 PATH</h1>
+        <p class="hero-sub">Ancient wisdom for the modern seeker — a living library of the world's most profound spiritual texts</p>
+        <div class="hero-divider"></div>
+    </section>
+
+    <div class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card reveal"><div class="stat-num">700</div><div class="stat-label">Gita Verses</div></div>
+            <div class="stat-card reveal"><div class="stat-num">18</div><div class="stat-label">Gita Chapters</div></div>
+            <div class="stat-card reveal"><div class="stat-num">10</div><div class="stat-label">Upanishads</div></div>
+            <div class="stat-card reveal"><div class="stat-num">22+</div><div class="stat-label">Sacred Chants</div></div>
+        </div>
+    </div>
+
+    <section class="about-section">
+        <div class="about-block reveal">
+            <h2>Our Mission</h2>
+            <p>The 1 Path exists to make the profound wisdom of the Bhagavad Gita, Upanishads, and Sacred Shlokas accessible to every seeker on the planet — completely free, beautifully presented, and available in multiple languages including Sanskrit, English, and Hindi.</p>
+        </div>
+
+        <div class="about-block quote reveal">
+            <p>"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि।"<br><br>
+            "You have the right to perform your prescribed duties, but you are not entitled to the fruits of your actions."</p>
+        </div>
+
+        <div class="about-block reveal">
+            <h2>What's Inside</h2>
+            <p>The Bhagavad Gita — the 700-verse scripture spoken by Lord Krishna to Arjuna on the battlefield of Kurukshetra — is the essence of all Vedic knowledge. The Upanishads are its philosophical foundation, exploring the nature of Brahman, the Atman (soul), and the ultimate reality behind all existence. The Shlokas and chants are sacred sounds that have been sung and recited for millennia, transforming consciousness and opening doors to the infinite.</p>
+        </div>
+
+        <div class="about-cards">
+            <div class="about-card reveal">
+                <h3>🙏 Bhagavad Gita</h3>
+                <p>18 chapters covering Karma Yoga, Bhakti Yoga, Jnana Yoga, and the path of Sannyasa. The complete manual for living with purpose.</p>
+            </div>
+            <div class="about-card reveal">
+                <h3>📖 Upanishads</h3>
+                <p>10 Principal Upanishads including Isha, Kena, Katha, Mundaka, and Mandukya — the end of knowledge, the highest wisdom.</p>
+            </div>
+            <div class="about-card reveal">
+                <h3>🔔 Sacred Shlokas</h3>
+                <p>Gayatri, Mahamrityunjaya, Om Namah Shivaya and more — chants of power, protection, and divine transformation.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="features-section">
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon">🌍</div>
+                <h3>Multilingual</h3>
+                <p>Every verse presented in Sanskrit Devanagari, English translation, and Hindi — side by side for deep study.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🔍</div>
+                <h3>Instant Search</h3>
+                <p>Search any verse, keyword, or concept across the entire Bhagavad Gita. Find what you need in seconds.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">📱</div>
+                <h3>Beautiful Design</h3>
+                <p>Glassmorphism aesthetic, ambient particles, and smooth animations — designed to elevate your reading experience.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🎵</div>
+                <h3>Meditation Music</h3>
+                <p>Ambient meditation music available on every page. Toggle with one click for a fully immersive experience.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">☀️🌙</div>
+                <h3>Dark & Light Modes</h3>
+                <p>Switch between dark and light themes. Beautiful in both — choose what serves your eyes best.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">♻️</div>
+                <h3>Daily Rotation</h3>
+                <p>The daily reflection card on the homepage updates automatically every day — a new verse of wisdom each dawn.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo">THE 1 PATH</div>
+        <p>Bhagavad Gita · Upanishads · Sacred Shlokas · The Eternal Path</p>
+        <p style="margin-top:10px;"><a href="index.html">Home</a> · <a href="gita.html">Gita</a> · <a href="upanishads.html">Upanishads</a> · <a href="shlokas.html">Shlokas</a></p>
+    </footer>
+
+    <script>
+    // Particles
+    (function() {
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d'); let w, h, particles = [];
+        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+        resize(); window.addEventListener('resize', resize);
+        for (let i = 0; i < 50; i++) {
+            particles.push({ x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.5+0.3,
+                dx: (Math.random()-0.5)*0.3, dy: (Math.random()-0.5)*0.3,
+                color: ['#C9A227','#E8C84A','#D4AF37'][Math.floor(Math.random()*3)],
+                alpha: Math.random()*0.4+0.1 });
+        }
+        function draw() {
+            ctx.clearRect(0,0,w,h);
+            particles.forEach(p => {
+                ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+                ctx.fillStyle=p.color; ctx.globalAlpha=p.alpha; ctx.fill();
+                p.x+=p.dx; p.y+=p.dy;
+                if(p.x<0||p.x>w) p.dx*=-1; if(p.y<0||p.y>h) p.dy*=-1;
+            });
+            ctx.globalAlpha=1; requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => { entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*80); }); }, {threshold:0.05});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Nav scroll
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+
+    // Theme
+    const themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('light');
+        themeBtn.textContent = document.body.classList.contains('light') ? '🌙' : '☀️';
+        localStorage.setItem('theme', document.body.classList.contains('light')?'light':'dark');
+    });
+    if(localStorage.getItem('theme')==='light'){ document.body.classList.add('light'); themeBtn.textContent='🌙'; }
+    </script>
+</body>
+</html>

@@ -4,218 +4,257 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The 1 Path — Divine Wisdom of the Ages</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Noto+Serif+Devanagari:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --midnight: #080810;
+            --midnight: #06060F;
+            --deep: #0A0A1A;
             --deep-blue: #0D1525;
-            --sacred-gold: #C9A227;
-            --warm-gold: #D4AF37;
+            --gold: #C9A227;
+            --gold-light: #E8C84A;
+            --gold-glow: rgba(201,162,39,0.15);
             --soft-gold: #F5E6C8;
-            --divine-rose: #8B2635;
-            --moonlight: #E8E4D9;
+            --rose: #8B2635;
+            --moon: #E8E4D9;
             --smoke: rgba(255,255,255,0.5);
-            --border: rgba(201,162,39,0.12);
+            --glass: rgba(255,255,255,0.03);
+            --glass-border: rgba(201,162,39,0.1);
+            --glass-hover: rgba(201,162,39,0.06);
+            --glass-strong: rgba(10,10,26,0.85);
         }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Cormorant Garamond', serif;
             background: var(--midnight);
-            color: var(--moonlight);
-            line-height: 1.8;
+            color: var(--moon);
             overflow-x: hidden;
         }
-        .ambient-bg {
+
+        /* PARTICLES */
+        #particles-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 0;
-            background:
-                radial-gradient(ellipse at 20% 10%, rgba(201,162,39,0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 90%, rgba(139,38,53,0.04) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(13,21,37,0.9) 0%, transparent 80%);
+            z-index: 0; pointer-events: none; opacity: 0.4;
         }
+
+        /* NAV */
         nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 24px 80px;
-            transition: all 0.5s ease;
+            padding: 22px 80px;
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
         }
         nav.scrolled {
-            background: rgba(8,8,16,0.97); backdrop-filter: blur(20px);
-            padding: 16px 80px; border-bottom: 1px solid var(--border);
+            background: rgba(6,6,15,0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 12px 80px;
         }
         .nav-logo {
-            font-family: 'Cinzel', serif; font-size: 1em; font-weight: 600;
-            letter-spacing: 0.35em; color: var(--sacred-gold);
+            font-family: 'Cinzel', serif;
+            font-size: 1em; font-weight: 700;
+            letter-spacing: 0.35em; color: var(--gold);
+            text-shadow: 0 0 30px rgba(201,162,39,0.3);
         }
-        .nav-links { display: flex; gap: 40px; }
+        .nav-links { display: flex; gap: 40px; align-items: center; }
         .nav-links a {
-            font-family: 'Inter', sans-serif; font-size: 0.65em; font-weight: 400;
-            letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke);
-            text-decoration: none; transition: color 0.3s; position: relative;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65em; font-weight: 400;
+            letter-spacing: 0.25em; text-transform: uppercase;
+            color: var(--smoke); text-decoration: none;
+            transition: all 0.3s; position: relative;
+            padding: 4px 0;
         }
-        .nav-links a:hover { color: var(--soft-gold); }
         .nav-links a::after {
-            content: ''; position: absolute; bottom: -5px; left: 0;
-            width: 0; height: 1px; background: var(--sacred-gold); transition: width 0.3s;
+            content: ''; position: absolute; bottom: -2px; left: 0;
+            width: 0; height: 1px; background: var(--gold);
+            transition: width 0.3s;
         }
-        .nav-links a:hover::after { width: 100%; }
-        .nav-links a.active { color: var(--sacred-gold); }
-        .nav-links a.active::after { width: 100%; }
-        
-        /* Hero */
+        .nav-links a:hover, .nav-links a.active { color: var(--soft-gold); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+        /* THEME TOGGLE */
+        .theme-toggle {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--gold); cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1em; transition: all 0.3s;
+        }
+        .theme-toggle:hover { background: var(--glass-hover); border-color: var(--gold); }
+
+        /* MUSIC TOGGLE */
+        .music-toggle {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--gold); cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8em; transition: all 0.3s;
+        }
+        .music-toggle:hover { background: var(--glass-hover); border-color: var(--gold); }
+        .music-toggle.playing { color: var(--gold-light); border-color: var(--gold); box-shadow: 0 0 15px rgba(201,162,39,0.2); }
+
+        /* HERO */
         .hero {
-            min-height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center;
-            padding: 120px 40px 80px; position: relative; z-index: 1;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; position: relative; z-index: 1;
+            padding: 120px 40px 80px;
         }
         .hero-om {
-            font-family: 'Cinzel', serif; font-size: 1em; letter-spacing: 0.8em;
-            color: var(--sacred-gold); margin-bottom: 50px; opacity: 0.7;
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 2.5em; color: var(--gold);
+            letter-spacing: 0.5em; margin-bottom: 30px;
+            opacity: 0; animation: fadeUp 1s ease 0.2s forwards;
+            text-shadow: 0 0 60px rgba(201,162,39,0.4);
         }
         .hero h1 {
-            font-family: 'Cinzel', serif; font-size: clamp(2.5em, 5vw, 5em);
-            font-weight: 400; letter-spacing: 0.2em; color: var(--soft-gold);
-            margin-bottom: 20px; line-height: 1.15;
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(2.5em, 6vw, 5em);
+            font-weight: 900; letter-spacing: 0.15em;
+            background: linear-gradient(135deg, var(--soft-gold), var(--gold), var(--soft-gold));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; line-height: 1.2;
+            opacity: 0; animation: fadeUp 1s ease 0.4s forwards;
         }
-        .hero-subtitle {
-            font-family: 'Cormorant Garamond', serif; font-style: italic;
-            font-size: 1.25em; color: var(--smoke); max-width: 600px;
-            margin-bottom: 60px; font-weight: 400;
+        .hero-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic; font-size: 1.3em;
+            color: var(--smoke); max-width: 600px;
+            margin-top: 20px; line-height: 1.8;
+            opacity: 0; animation: fadeUp 1s ease 0.6s forwards;
         }
-        .hero-line {
-            width: 100px; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--sacred-gold), transparent);
-            margin-bottom: 50px;
+        .hero-divider {
+            width: 120px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 30px auto; opacity: 0;
+            animation: fadeUp 1s ease 0.8s forwards;
         }
-        
-        /* Main Content Areas */
-        section { position: relative; z-index: 1; padding: 100px 80px; }
-        
-        /* Cards Grid */
-        .sacred-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
-            max-width: 1400px; margin: 0 auto;
+        .hero-scroll {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6em; letter-spacing: 0.3em; text-transform: uppercase;
+            color: var(--smoke); margin-top: 30px; opacity: 0;
+            animation: fadeUp 1s ease 1s forwards;
         }
-        .sacred-card {
-            border: 1px solid var(--border); padding: 45px 35px;
-            transition: all 0.4s ease; text-decoration: none;
-            display: block; color: inherit;
+
+        /* CARDS GRID */
+        .cards-section { position: relative; z-index: 1; padding: 20px 80px 100px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1200px; margin: 0 auto; }
+        .card {
+            border: 1px solid var(--glass-border);
+            background: var(--glass-strong);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 45px 35px;
+            text-decoration: none; color: inherit;
+            transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+            position: relative; overflow: hidden;
+            cursor: pointer;
+            opacity: 0; transform: translateY(30px);
         }
-        .sacred-card:hover {
-            border-color: rgba(201,162,39,0.35);
-            background: rgba(201,162,39,0.03);
-            transform: translateY(-4px);
+        .card.reveal { opacity: 1; transform: translateY(0); }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0; transition: opacity 0.4s;
         }
-        .sacred-card-icon {
-            font-family: 'Cinzel', serif; font-size: 2.5em; color: var(--sacred-gold);
-            opacity: 0.7; margin-bottom: 20px;
+        .card:hover { border-color: rgba(201,162,39,0.25); background: var(--glass-hover); transform: translateY(-4px); }
+        .card:hover::before { opacity: 1; }
+        .card-icon { font-family: 'Noto Serif Devanagari', serif; font-size: 2em; color: var(--gold); margin-bottom: 20px; }
+        .card h3 {
+            font-family: 'Cinzel', serif; font-size: 0.65em; letter-spacing: 0.25em;
+            text-transform: uppercase; color: var(--soft-gold); margin-bottom: 5px;
         }
-        .sacred-card h3 {
-            font-family: 'Cinzel', serif; font-size: 1.1em; font-weight: 500;
-            letter-spacing: 0.15em; color: var(--soft-gold); margin-bottom: 12px;
+        .card h2 {
+            font-family: 'Cinzel', serif; font-size: 1.15em;
+            font-weight: 500; letter-spacing: 0.08em; color: var(--moon);
+            margin-bottom: 12px;
         }
-        .sacred-card p {
-            font-size: 0.95em; color: rgba(255,255,255,0.45); line-height: 1.7;
+        .card p { font-size: 0.95em; color: var(--smoke); line-height: 1.7; font-style: italic; }
+        .card-tag {
+            display: inline-block; margin-top: 18px;
+            font-family: 'Inter', sans-serif; font-size: 0.58em;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--gold); border: 1px solid var(--glass-border);
+            padding: 5px 14px;
         }
-        .sacred-card .count {
-            font-family: 'Inter', sans-serif; font-size: 0.65em;
-            letter-spacing: 0.2em; text-transform: uppercase; color: var(--sacred-gold);
-            margin-top: 16px; opacity: 0.7;
+
+        /* DAILY REFLECTION */
+        .daily-section { position: relative; z-index: 1; padding: 0 80px 100px; }
+        .daily-card {
+            max-width: 900px; margin: 0 auto;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-strong);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 50px 60px;
+            text-align: center;
+            position: relative; overflow: hidden;
         }
-        
-        /* Daily Quote Section */
-        .daily-section {
-            padding: 120px 80px;
-            background: linear-gradient(180deg, transparent 0%, rgba(13,21,37,0.4) 50%, transparent 100%);
-        }
-        .daily-quote-wrap {
-            max-width: 850px; margin: 0 auto; text-align: center;
-            padding: 80px 60px;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
+        .daily-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(ellipse, rgba(201,162,39,0.03) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
         }
         .daily-label {
-            font-family: 'Inter', sans-serif; font-size: 0.6em; letter-spacing: 0.4em;
-            text-transform: uppercase; color: var(--sacred-gold); margin-bottom: 40px;
+            font-family: 'Inter', sans-serif; font-size: 0.6em;
+            letter-spacing: 0.4em; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 20px; position: relative;
         }
-        .daily-quote-text {
-            font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4em, 2.5vw, 2em);
-            line-height: 1.8; color: var(--soft-gold); margin-bottom: 30px;
+        .daily-verse-sanskrit {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 1.4em; color: var(--soft-gold);
+            line-height: 2; margin-bottom: 15px; position: relative;
         }
-        .daily-quote-ref {
-            font-family: 'Inter', sans-serif; font-size: 0.75em;
-            letter-spacing: 0.2em; color: rgba(255,255,255,0.4);
+        .daily-verse-english {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1em; color: var(--moon);
+            font-style: italic; line-height: 1.8; position: relative;
         }
-        .daily-quote-ref em { font-style: italic; color: var(--sacred-gold); }
-        
-        /* Sanskrit Verse Display */
-        .sanskrit-verse {
-            font-family: 'Cormorant Garamond', serif; font-size: 1.1em;
-            color: var(--sacred-gold); margin-bottom: 16px; opacity: 0.85;
-            font-style: italic;
+        .daily-ref {
+            font-family: 'Inter', sans-serif; font-size: 0.6em;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--gold); margin-top: 20px; opacity: 0.7; position: relative;
         }
-        .verse-transliteration {
-            font-family: 'Cormorant Garamond', serif; font-style: italic;
-            font-size: 0.95em; color: rgba(255,255,255,0.5); margin-bottom: 20px;
-        }
-        .verse-meaning {
-            font-family: 'Cormorant Garamond', serif; font-size: 1.1em;
-            color: var(--moonlight); margin-bottom: 12px;
-        }
-        
-        /* Section Headers */
-        .section-header {
-            text-align: center; margin-bottom: 60px;
-        }
-        .section-header h2 {
-            font-family: 'Cinzel', serif; font-size: 0.7em; font-weight: 500;
-            letter-spacing: 0.5em; text-transform: uppercase; color: var(--sacred-gold);
-            margin-bottom: 16px;
-        }
-        .section-header p {
-            font-family: 'Cormorant Garamond', serif; font-style: italic;
-            font-size: 1.05em; color: rgba(255,255,255,0.4); max-width: 500px; margin: 0 auto;
-        }
-        
-        /* Footer */
+
+        /* FOOTER */
         footer {
-            position: relative; z-index: 1; padding: 60px 80px; text-align: center;
-            border-top: 1px solid var(--border);
+            position: relative; z-index: 1; padding: 60px 80px;
+            text-align: center; border-top: 1px solid var(--glass-border);
         }
-        .footer-logo {
-            font-family: 'Cinzel', serif; font-size: 1.3em; letter-spacing: 0.4em;
-            color: var(--sacred-gold); margin-bottom: 16px;
+        .footer-logo { font-family: 'Cinzel', serif; font-size: 1.2em; letter-spacing: 0.4em; color: var(--gold); margin-bottom: 15px; }
+        footer p { font-family: 'Inter', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: rgba(255,255,255,0.2); }
+        footer a { color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.3s; }
+        footer a:hover { color: var(--gold); }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* LIGHT THEME */
+        body.light {
+            --midnight: #F5F0E8; --deep: #EDE7D8; --deep-blue: #E5DFD0;
+            --glass: rgba(0,0,0,0.02); --glass-border: rgba(201,162,39,0.15);
+            --glass-hover: rgba(201,162,39,0.04); --glass-strong: rgba(245,240,232,0.9);
+            --moon: #2A2520; --smoke: rgba(42,37,32,0.6);
         }
-        .footer-tagline {
-            font-family: 'Cormorant Garamond', serif; font-style: italic;
-            font-size: 1em; color: rgba(255,255,255,0.35); margin-bottom: 30px;
-        }
-        .footer-line {
-            width: 50px; height: 1px; background: var(--sacred-gold);
-            margin: 0 auto 30px; opacity: 0.3;
-        }
-        footer p { font-family: 'Inter', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: rgba(255,255,255,0.25); }
-        
-        .reveal { opacity: 0; transform: translateY(25px); transition: all 0.7s ease; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        
-        @media (max-width: 1024px) {
-            .sacred-grid { grid-template-columns: 1fr 1fr; }
-            nav { padding: 20px 30px; }
-            section { padding: 70px 30px; }
-            .daily-section { padding: 70px 30px; }
-        }
-        @media (max-width: 640px) {
-            .sacred-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-            .daily-quote-wrap { padding: 50px 25px; }
-        }
+
+        @media (max-width: 1024px) { .cards-grid { grid-template-columns: 1fr 1fr; } nav { padding: 16px 30px; } .cards-section, .daily-section { padding: 20px 30px 80px; } }
+        @media (max-width: 640px) { .cards-grid { grid-template-columns: 1fr; } .nav-links { display: none; } .daily-card { padding: 35px 25px; } }
     </style>
 </head>
 <body>
-    <div class="ambient-bg"></div>
-    
+    <canvas id="particles-canvas"></canvas>
+    <audio id="bg-music" loop preload="none">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+    </audio>
+
     <nav id="navbar">
         <div class="nav-logo">THE 1 PATH</div>
         <div class="nav-links">
@@ -223,81 +262,161 @@
             <a href="gita.html">Bhagavad Gita</a>
             <a href="upanishads.html">Upanishads</a>
             <a href="shlokas.html">Shlokas</a>
+            <a href="about.html">About</a>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+            <button class="music-toggle" id="musicBtn" title="Toggle Meditation Music">🎵</button>
+            <button class="theme-toggle" id="themeBtn" title="Toggle Theme">☀️</button>
         </div>
     </nav>
-    
+
     <section class="hero">
         <div class="hero-om">ॐ</div>
         <h1>DIVINE WISDOM</h1>
-        <p class="hero-subtitle">The eternal teachings of the Bhagavad Gita, Upanishads, and sacred Shlokas — preserved for all souls seeking the truth</p>
-        <div class="hero-line"></div>
-        <p id="hero-date" style="font-family: 'Inter', sans-serif; font-size: 0.65em; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.3);"></p>
+        <p class="hero-sub">The eternal science of the soul — Bhagavad Gita, Upanishads & Sacred Shlokas. Discover the timeless path to freedom, purpose, and inner peace.</p>
+        <div class="hero-divider"></div>
+        <div class="hero-scroll">Scroll to explore</div>
     </section>
-    
-    <section>
-        <div class="section-header">
-            <h2>Explore the Sacred Texts</h2>
-            <p>Three timeless pillars of Vedantic wisdom, each a gateway to the infinite</p>
-        </div>
-        <div class="sacred-grid">
-            <a href="gita.html" class="sacred-card reveal">
-                <div class="sacred-card-icon">श्री</div>
-                <h3>BHAGAVAD GITA</h3>
-                <p>The song of the Divine. 18 chapters revealing the path of action, devotion, knowledge, and surrender. The manual for living a purposeful life.</p>
-                <div class="count">18 Chapters · 700 Verses</div>
-            </a>
-            <a href="upanishads.html" class="sacred-card reveal">
-                <div class="sacred-card-icon">उप</div>
-                <h3>UPANISHADS</h3>
-                <p>The culmination of Vedantic knowledge. Texts exploring the nature of Brahman, Atman, and the ultimate reality behind all existence.</p>
-                <div class="count">10 Principal · Core Wisdom</div>
-            </a>
-            <a href="shlokas.html" class="sacred-card reveal">
-                <div class="sacred-card-icon">मंत्र</div>
-                <h3>SHLOKAS</h3>
-                <p>Chanted verses of power and protection. From Gayatri to Mahamrityunjaya — sacred sounds that transform consciousness.</p>
-                <div class="count">Sacred Chants · Daily Prayers</div>
-            </a>
+
+    <section class="cards-section">
+        <div class="cards-grid">
+            <div class="card" onclick="location.href='gita.html'">
+                <div class="card-icon">श्री</div>
+                <h3>Bhagavad Gita</h3>
+                <h2>The Song of the Divine</h2>
+                <p>18 chapters. 700 verses. The timeless manual for living with purpose, devotion, and wisdom.</p>
+                <span class="card-tag">18 Chapters · 700 Verses</span>
+            </div>
+            <div class="card" onclick="location.href='upanishads.html'">
+                <div class="card-icon">उप</div>
+                <h3>Upanishads</h3>
+                <h2>End of Knowledge</h2>
+                <p>10 Principal Upanishads exploring the nature of Brahman, Atman, and the ultimate reality behind all existence.</p>
+                <span class="card-tag">10 Principal Texts</span>
+            </div>
+            <div class="card" onclick="location.href='shlokas.html'">
+                <div class="card-icon">मं</div>
+                <h3>Shlokas</h3>
+                <h2>Sacred Chants</h2>
+                <p>Gayatri, Mahamrityunjaya, Om Namah Shivaya — sacred sounds that transform consciousness and open the doors to the infinite.</p>
+                <span class="card-tag">Sacred Chants & Prayers</span>
+            </div>
         </div>
     </section>
-    
+
     <section class="daily-section">
-        <div class="section-header">
-            <h2>Daily Reflection</h2>
-            <p>A verse for each day of the week from the sacred texts</p>
-        </div>
-        <div class="daily-quote-wrap">
-            <div class="daily-label" id="day-label">Monday's Verse</div>
-            <div class="sanskrit-verse" id="daily-sanskrit"></div>
-            <div class="verse-transliteration" id="daily-translit"></div>
-            <div class="daily-quote-text" id="daily-text"></div>
-            <div class="daily-quote-ref" id="daily-ref"></div>
+        <div class="daily-card" id="dailyCard">
+            <div class="daily-label">Daily Reflection</div>
+            <div class="daily-verse-sanskrit" id="dailySanskrit"></div>
+            <div class="daily-verse-english" id="dailyEnglish"></div>
+            <div class="daily-ref" id="dailyRef"></div>
         </div>
     </section>
-    
+
     <footer>
         <div class="footer-logo">THE 1 PATH</div>
-        <p class="footer-tagline">"The soul journeys from ignorance to illumination — these texts light the way"</p>
-        <div class="footer-line"></div>
-        <p>© 2025 The 1 Path · All sacred wisdom belongs to the Divine</p>
+        <p>Bhagavad Gita · 18 Chapters · 700 Verses · The Eternal Song of the Divine</p>
+        <p style="margin-top:10px;"><a href="index.html">Home</a> · <a href="gita.html">Gita</a> · <a href="upanishads.html">Upanishads</a> · <a href="shlokas.html">Shlokas</a> · <a href="about.html">About</a></p>
     </footer>
-    
-    <script src="spiritual-home.js"></script>
+
     <script>
-        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-        const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-        const now = new Date();
-        document.getElementById('hero-date').textContent = days[now.getDay()] + ' · ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
-        
-        const reveals = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
-        reveals.forEach(el => observer.observe(el));
-        
-        window.addEventListener('scroll', () => {
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    // Particles
+    (function() {
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let w, h, particles = [];
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+        const isLight = document.body.classList.contains('light');
+        const colors = isLight ? ['#C9A227','#D4AF37','#B8860B'] : ['#C9A227','#E8C84A','#D4AF37'];
+        for (let i = 0; i < 60; i++) {
+            particles.push({
+                x: Math.random() * w, y: Math.random() * h,
+                r: Math.random() * 1.5 + 0.3,
+                dx: (Math.random() - 0.5) * 0.3,
+                dy: (Math.random() - 0.5) * 0.3,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                alpha: Math.random() * 0.5 + 0.1
+            });
+        }
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.alpha;
+                ctx.fill();
+                p.x += p.dx; p.y += p.dy;
+                if (p.x < 0 || p.x > w) p.dx *= -1;
+                if (p.y < 0 || p.y > h) p.dy *= -1;
+            });
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                setTimeout(() => e.target.classList.add('reveal'), i * 100);
+            }
         });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.card').forEach(c => observer.observe(c));
+
+    // Nav scroll
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Theme toggle
+    const themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('light');
+        themeBtn.textContent = document.body.classList.contains('light') ? '🌙' : '☀️';
+        localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    });
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light');
+        themeBtn.textContent = '🌙';
+    }
+
+    // Music toggle (ambient temple bell / om chant from free source)
+    const musicBtn = document.getElementById('musicBtn');
+    const bgMusic = document.getElementById('bg-music');
+    // Using a reliable free ambient source
+    bgMusic.src = 'https://cdn.pixabay.com/audio/2022/10/25/audio_946bc85fde.mp3';
+    bgMusic.volume = 0.15;
+    bgMusic.loop = true;
+    let musicPlaying = false;
+    musicBtn.addEventListener('click', () => {
+        if (musicPlaying) { bgMusic.pause(); musicBtn.classList.remove('playing'); musicBtn.textContent = '🎵'; }
+        else { bgMusic.play().catch(() => {}); musicBtn.classList.add('playing'); musicBtn.textContent = '🔊'; }
+        musicPlaying = !musicPlaying;
+    });
+
+    // Daily verse rotation
+    const DAILY_VERSES = [
+        { sanskrit: "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥", english: "You have the right to perform your prescribed duties, but you are not entitled to the fruits of your actions. Never consider yourself the cause of the results, nor become attached to inaction.", ref: "Bhagavad Gita 2.47" },
+        { sanskrit: "योगस्थः कुरु कर्माणि सङ्गं त्यक्त्वा धनञ्जय। सिद्ध्यसिद्ध्योर्निर्विकारः कर्मणि प्रोच्यते योगः॥", english: "Established in yoga, O Arjuna, perform actions abandoning attachment. Be balanced in success and failure. This equanimity is called yoga.", ref: "Bhagavad Gita 2.48" },
+        { sanskrit: "सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज। अहं त्वा सर्वपापेभ्यो मोक्षयिष्यामि मा शुचः॥", english: "Abandon all forms of dharma and simply surrender unto me alone. I will liberate you from all sins. Do not grieve.", ref: "Bhagavad Gita 18.66" },
+        { sanskrit: "जययमानश्च तान्सर्वान्संयताग्रः प्रहर्षयन्। प्रत्याहृत्य च शस्त्राणि शयान उपाविशत्॥", english: "The soul is never born nor does it ever die. Having never come into existence, it does not cease to exist either. The soul is unborn, eternal, immortal.", ref: "Bhagavad Gita 2.20" },
+        { sanskrit: "भूमिरापोऽनलो वायुः खं लोहितं सुधां च यत्। एतत्तत्सम्प्रयुक्तमृतं च तत्सम्प्रयुक्तं च यत्॥", english: "Earth, water, fire, air, ether, mind, intellect, and ego — these eight constitute my material energy. Know this and be free from all illusion.", ref: "Bhagavad Gita 7.4" },
+        { sanskrit: "यदा यदा हि धर्मस्य ग्लानिर्भवति भारत। अभ्युत्थानमधर्मस्य तदात्मानं सृजाम्यहम्॥", english: "Whenever dharma declines and adharma rises, I manifest Myself. To protect the righteous and destroy the wicked, I appear age after age.", ref: "Bhagavad Gita 4.7" },
+        { sanskrit: "न जायते म्रियते वा कदाचिन्नायं भूत्वा भविता वा न भूयः। अजो नित्यः शाश्वतोऽयं पुराणो न हन्यते हन्यमाने शरीरे॥", english: "The soul is never born nor does it ever die. Unborn, eternal, everlasting — the Ancient One is not killed when the body is slain.", ref: "Bhagavad Gita 2.20" }
+    ];
+    const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(),0,1)) / 86400000);
+    const daily = DAILY_VERSES[dayOfYear % DAILY_VERSES.length];
+    document.getElementById('dailySanskrit').textContent = daily.sanskrit;
+    document.getElementById('dailyEnglish').textContent = daily.english;
+    document.getElementById('dailyRef').textContent = daily.ref;
     </script>
 </body>
 </html>
