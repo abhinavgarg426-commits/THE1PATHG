@@ -68,11 +68,11 @@
                                     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;align-items:end;">
                                         <div style="display:flex;flex-direction:column;gap:4px;">
                                             <span style="font-family:'Inter',sans-serif;font-size:0.52em;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);">Chapter</span>
-                                            <input type="number" id="customChapter" min="1" max="18" value="2" placeholder="1-18" style="padding:8px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(201,162,39,0.12);color:#E8E4D9;font-family:'Cormorant Garamond',serif;font-size:0.95em;outline:none;width:100%;">
+                                            <input type="number" id="customChapter" min="1" max="18" value="2" placeholder="1-18" onkeydown="if(event.key==='Enter')loadCustomVerse()" style="padding:8px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(201,162,39,0.12);color:#E8E4D9;font-family:'Cormorant Garamond',serif;font-size:0.95em;outline:none;width:100%;">
                                         </div>
                                         <div style="display:flex;flex-direction:column;gap:4px;">
                                             <span style="font-family:'Inter',sans-serif;font-size:0.52em;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);">Verse</span>
-                                            <input type="number" id="customVerse" min="1" max="85" value="47" placeholder="1-85" style="padding:8px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(201,162,39,0.12);color:#E8E4D9;font-family:'Cormorant Garamond',serif;font-size:0.95em;outline:none;width:100%;">
+                                            <input type="number" id="customVerse" min="1" max="85" value="47" placeholder="1-85" onkeydown="if(event.key==='Enter')loadCustomVerse()" style="padding:8px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(201,162,39,0.12);color:#E8E4D9;font-family:'Cormorant Garamond',serif;font-size:0.95em;outline:none;width:100%;">
                                         </div>
                                         <button onclick="loadCustomVerse()" style="padding:8px 0;border:1px solid var(--gold);background:transparent;color:var(--gold);font-family:'Inter',sans-serif;font-size:0.55em;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;white-space:nowrap;">Load</button>
                                     </div>
@@ -120,15 +120,15 @@
                 </div>
 
                 <div class="quick-verses">
-                    <div class="quick-verses-label">Popular verses to try:</div>
+                    <div class="quick-verses-label">Quick select:</div>
                     <div class="quick-btns">
-                        <button onclick="loadVerse('2.47')">2.47</button>
-                        <button onclick="loadVerse('2.20')">2.20</button>
-                        <button onclick="loadVerse('2.48')">2.48</button>
-                        <button onclick="loadVerse('4.7')">4.7</button>
-                        <button onclick="loadVerse('6.5')">6.5</button>
-                        <button onclick="loadVerse('9.34')">9.34</button>
-                        <button onclick="loadVerse('18.66')">18.66</button>
+                        <button onclick="quickLoad('2.47')">2.47</button>
+                        <button onclick="quickLoad('2.20')">2.20</button>
+                        <button onclick="quickLoad('2.48')">2.48</button>
+                        <button onclick="quickLoad('4.7')">4.7</button>
+                        <button onclick="quickLoad('6.5')">6.5</button>
+                        <button onclick="quickLoad('9.34')">9.34</button>
+                        <button onclick="quickLoad('18.66')">18.66</button>
                     </div>
                 </div>
             </div>
@@ -156,6 +156,8 @@
             });
         });
     }
+    // Auto-load daily verse (2.47) as default
+    
 
     function loadCustomVerse() {
             const ch = parseInt(document.getElementById('customChapter').value) || 1;
@@ -319,6 +321,8 @@
             }
         });
     }
+    // Auto-load daily verse (2.47) as default
+    
 
     // Generate blank canvas on load
     generateCard();

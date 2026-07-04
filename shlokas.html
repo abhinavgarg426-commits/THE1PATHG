@@ -132,6 +132,24 @@
     const themeBtn=document.getElementById('themeBtn');themeBtn.addEventListener('click',()=>{document.body.classList.toggle('light');themeBtn.textContent=document.body.classList.contains('light')?'&#9790;':'&#9788;';localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');});if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');themeBtn.textContent='&#9790;';}
     function copyVerse(v){navigator.clipboard.writeText(`${v.sanskrit}\n\n"${v.translation}"`).then(()=>{const t=document.createElement('div');t.textContent='Copied! ';t.style.cssText='position:fixed;bottom:30px;right:30px;background:rgba(10,10,26,0.95);border:1px solid #C9A227;color:#F5E6C8;padding:12px 24px;font-family:Inter,sans-serif;font-size:0.7em;z-index:9999;border-radius:4px';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);});}
     function renderCard(c){return `<div class="chant-card reveal"><div class="chant-type">${c.type||'Shloka'}</div><div class="chant-name">${c.name}</div><div class="chant-sanskrit">${c.sanskrit}</div><div class="chant-translit">${c.translit}</div><div class="chant-divider"></div><div class="chant-eng">${c.translation}</div>${c.hindi?`<div class="chant-hindi">${c.hindi}</div>`:''}${c.benefit?`<div class="chant-benefit"> ${c.benefit}</div>`:''}<div class="verse-actions"><button class="verse-action-btn" onclick="copyVerse(${JSON.stringify(c).replace(/'/g,"\\'")})" title="Copy">&#9744;</button></div></div>`;}
+    function playMantra(name, btn) {
+        // Try to speak the mantra name in Sanskrit if available
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(name);
+            utter.lang = 'sa-IN';
+            utter.rate = 0.7;
+            utter.pitch = 1;
+            // Highlight the button
+            btn.style.borderColor = 'var(--gold)';
+            btn.style.color = 'var(--gold)';
+            utter.onend = function() {
+                btn.style.borderColor = '';
+                btn.style.color = '';
+            };
+            window.speechSynthesis.speak(utter);
+        }
+    }
     function renderShlokas(){document.getElementById('chantGrid').innerHTML=SHLOKAS.mahaShlokas.map(renderCard).join('');document.getElementById('prayerGrid').innerHTML=SHLOKAS.dailyPrayers.map(renderCard).join('');initReveal();}renderShlokas();
     </script>
 </body>
