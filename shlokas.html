@@ -64,7 +64,7 @@
 <body>
     <canvas id="particles-canvas"></canvas>
     <nav id="navbar">
-        <div class="nav-logo">THE 1 PATH</div>
+        <div class="nav-logo">THE HINDU PATH</div>
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="gita.html">Bhagavad Gita</a>
@@ -72,7 +72,7 @@
             <a href="shlokas.html" class="active">Shlokas</a>
             <a href="about.html">About</a>
         </div>
-        <div class="nav-right"><button class="nav-btn" id="themeBtn" title="Toggle Theme">☀️</button></div>
+        <div class="nav-right"><button class="nav-btn" id="themeBtn" title="Toggle Theme">&#9788;</button></div>
     </nav>
     <div class="hero">
         <div class="hero-om">ॐ</div>
@@ -81,33 +81,33 @@
         <div class="hero-divider"></div>
     </div>
     <section>
-        <div class="section-header"><h2>🙏 Maha Shlokas & Mantras</h2><p>Chants of power, healing, and liberation</p></div>
+        <div class="section-header"><h2>&#2384; Maha Shlokas & Mantras</h2><p>Chants of power, healing, and liberation</p></div>
         <div class="chant-grid" id="chantGrid"></div>
-        <div class="section-header"><h2>🪷 Daily Prayers</h2><p>Sacred verses for morning and evening practice</p></div>
+        <div class="section-header"><h2>&#2384; Daily Prayers</h2><p>Sacred verses for morning and evening practice</p></div>
         <div class="chant-grid" id="prayerGrid"></div>
     </section>
     <!-- BG MUSIC PLAYER -->
     <div id="musicPlayer" style="position:fixed;bottom:24px;right:24px;z-index:9999;">
-        <div id="musicToggle" onclick="toggleMusic()" style="width:48px;height:48px;border-radius:50%;border:1px solid rgba(201,162,39,0.3);background:rgba(10,10,26,0.9);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1em;transition:all 0.3s;box-shadow:0 4px 24px rgba(201,162,39,0.15);">🎵</div>
+        <div id="musicToggle" onclick="toggleMusic()" style="width:48px;height:48px;border-radius:50%;border:1px solid rgba(201,162,39,0.3);background:rgba(10,10,26,0.9);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1em;transition:all 0.3s;box-shadow:0 4px 24px rgba(201,162,39,0.15);">&#9834;</div>
         <div id="musicPanel" style="display:none;position:absolute;bottom:58px;right:0;width:220px;background:rgba(10,10,26,0.95);backdrop-filter:blur(20px);border:1px solid rgba(201,162,39,0.2);padding:20px;border-radius:8px;">
             <div style="font-family:'Cinzel',serif;font-size:0.6em;letter-spacing:0.2em;color:var(--gold);text-align:center;margin-bottom:12px;">MEDITATION</div>
             <div style="font-family:'Inter',sans-serif;font-size:0.6em;color:rgba(255,255,255,0.5);text-align:center;margin-bottom:15px;">Bansuri Flute · Ambient</div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                <span style="font-size:0.7em;color:var(--smoke);">♩</span>
+                <span style="font-size:0.7em;color:var(--smoke);">&#9833;</span>
                 <input type="range" id="volSlider" min="0" max="100" value="30" onchange="setVolume(this.value)" style="flex:1;accent-color:var(--gold);height:3px;">
-                <span style="font-size:0.7em;color:var(--smoke);">♪</span>
+                <span style="font-size:0.7em;color:var(--smoke);">&#9834;</span>
             </div>
             <div style="display:flex;justify-content:center;gap:8px;">
-                <button onclick="prevTrack()" style="width:30px;height:30px;border-radius:50%;border:1px solid var(--glass-border);background:transparent;color:var(--smoke);cursor:pointer;font-size:0.7em;display:flex;align-items:center;justify-content:center;">⏮</button>
-                <button onclick="toggleMusic()" id="playPauseBtn" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(201,162,39,0.4);background:rgba(201,162,39,0.1);color:var(--gold);cursor:pointer;font-size:0.85em;display:flex;align-items:center;justify-content:center;">▶</button>
-                <button onclick="nextTrack()" style="width:30px;height:30px;border-radius:50%;border:1px solid var(--glass-border);background:transparent;color:var(--smoke);cursor:pointer;font-size:0.7em;display:flex;align-items:center;justify-content:center;">⏭</button>
+                <button onclick="prevTrack()" style="width:30px;height:30px;border-radius:50%;border:1px solid var(--glass-border);background:transparent;color:var(--smoke);cursor:pointer;font-size:0.7em;display:flex;align-items:center;justify-content:center;">&#9664;&#9664;</button>
+                <button onclick="toggleMusic()" id="playPauseBtn" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(201,162,39,0.4);background:rgba(201,162,39,0.1);color:var(--gold);cursor:pointer;font-size:0.85em;display:flex;align-items:center;justify-content:center;">&#9654;</button>
+                <button onclick="nextTrack()" style="width:30px;height:30px;border-radius:50%;border:1px solid var(--glass-border);background:transparent;color:var(--smoke);cursor:pointer;font-size:0.7em;display:flex;align-items:center;justify-content:center;">&#9654;&#9654;</button>
             </div>
         </div>
     </div>
     <audio id="bgAudio" loop preload="none"></audio>
 
     <footer>
-        <div class="footer-logo">THE 1 PATH</div>
+        <div class="footer-logo">THE HINDU PATH</div>
         <p>Shlokas · Vedic Chants · Sacred Sounds · <a href="index.html">Home</a></p>
     </footer>
     <script src="shlokas-data.js"></script>
@@ -119,19 +119,19 @@
         let trackIdx=+localStorage.getItem('musicTrack')||0, isPlaying=localStorage.getItem('musicPlaying')==='1';
         function loadTrack(idx){audio.src=tracks[idx];audio.volume=(localStorage.getItem('musicVol')||30)/100;}
         loadTrack(trackIdx);
-        function toggleMusic(){const p=document.getElementById('musicPanel');p.style.display=p.style.display==='none'?'block':'none';if(audio.paused){audio.play().catch(()=>{});isPlaying=true;document.getElementById('playPauseBtn').textContent='⏸';localStorage.setItem('musicPlaying','1');}else{audio.pause();isPlaying=false;document.getElementById('playPauseBtn').textContent='▶';localStorage.setItem('musicPlaying','0');}}
+        function toggleMusic(){const p=document.getElementById('musicPanel');p.style.display=p.style.display==='none'?'block':'none';if(audio.paused){audio.play().catch(()=>{});isPlaying=true;document.getElementById('playPauseBtn').textContent='&#9646;&#9646;';localStorage.setItem('musicPlaying','1');}else{audio.pause();isPlaying=false;document.getElementById('playPauseBtn').textContent='&#9654;';localStorage.setItem('musicPlaying','0');}}
         function setVolume(v){audio.volume=v/100;localStorage.setItem('musicVol',v);}
         function nextTrack(){trackIdx=(trackIdx+1)%tracks.length;localStorage.setItem('musicTrack',trackIdx);loadTrack(trackIdx);if(isPlaying)audio.play().catch(()=>{});}
         function prevTrack(){trackIdx=(trackIdx-1+tracks.length)%tracks.length;localStorage.setItem('musicTrack',trackIdx);loadTrack(trackIdx);if(isPlaying)audio.play().catch(()=>{});}
-        if(isPlaying&&audio.src){audio.play().catch(()=>{});document.getElementById('playPauseBtn').textContent='⏸';}
+        if(isPlaying&&audio.src){audio.play().catch(()=>{});document.getElementById('playPauseBtn').textContent='&#9646;&#9646;';}
         document.getElementById('volSlider').value=localStorage.getItem('musicVol')||30;
     })();
     // PARTICLES
     function initReveal(){const o=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*60);});},{threshold:0.05});document.querySelectorAll('.reveal').forEach(el=>o.observe(el));}
     window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
-    const themeBtn=document.getElementById('themeBtn');themeBtn.addEventListener('click',()=>{document.body.classList.toggle('light');themeBtn.textContent=document.body.classList.contains('light')?'🌙':'☀️';localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');});if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');themeBtn.textContent='🌙';}
-    function copyVerse(v){navigator.clipboard.writeText(`${v.sanskrit}\n\n"${v.translation}"`).then(()=>{const t=document.createElement('div');t.textContent='Copied! ✨';t.style.cssText='position:fixed;bottom:30px;right:30px;background:rgba(10,10,26,0.95);border:1px solid #C9A227;color:#F5E6C8;padding:12px 24px;font-family:Inter,sans-serif;font-size:0.7em;z-index:9999;border-radius:4px';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);});}
-    function renderCard(c){return `<div class="chant-card reveal"><div class="chant-type">${c.type||'Shloka'}</div><div class="chant-name">${c.name}</div><div class="chant-sanskrit">${c.sanskrit}</div><div class="chant-translit">${c.translit}</div><div class="chant-divider"></div><div class="chant-eng">${c.translation}</div>${c.hindi?`<div class="chant-hindi">${c.hindi}</div>`:''}${c.benefit?`<div class="chant-benefit">✨ ${c.benefit}</div>`:''}<div class="verse-actions"><button class="verse-action-btn" onclick="copyVerse(${JSON.stringify(c).replace(/'/g,"\\'")})" title="Copy">📋</button></div></div>`;}
+    const themeBtn=document.getElementById('themeBtn');themeBtn.addEventListener('click',()=>{document.body.classList.toggle('light');themeBtn.textContent=document.body.classList.contains('light')?'&#9790;':'&#9788;';localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');});if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');themeBtn.textContent='&#9790;';}
+    function copyVerse(v){navigator.clipboard.writeText(`${v.sanskrit}\n\n"${v.translation}"`).then(()=>{const t=document.createElement('div');t.textContent='Copied! ';t.style.cssText='position:fixed;bottom:30px;right:30px;background:rgba(10,10,26,0.95);border:1px solid #C9A227;color:#F5E6C8;padding:12px 24px;font-family:Inter,sans-serif;font-size:0.7em;z-index:9999;border-radius:4px';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);});}
+    function renderCard(c){return `<div class="chant-card reveal"><div class="chant-type">${c.type||'Shloka'}</div><div class="chant-name">${c.name}</div><div class="chant-sanskrit">${c.sanskrit}</div><div class="chant-translit">${c.translit}</div><div class="chant-divider"></div><div class="chant-eng">${c.translation}</div>${c.hindi?`<div class="chant-hindi">${c.hindi}</div>`:''}${c.benefit?`<div class="chant-benefit"> ${c.benefit}</div>`:''}<div class="verse-actions"><button class="verse-action-btn" onclick="copyVerse(${JSON.stringify(c).replace(/'/g,"\\'")})" title="Copy">&#9744;</button></div></div>`;}
     function renderShlokas(){document.getElementById('chantGrid').innerHTML=SHLOKAS.mahaShlokas.map(renderCard).join('');document.getElementById('prayerGrid').innerHTML=SHLOKAS.dailyPrayers.map(renderCard).join('');initReveal();}renderShlokas();
     </script>
 </body>

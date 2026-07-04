@@ -3,114 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verse Card Generator — The 1 Path</title>
+    <title>Verse Card Generator — The Hindu Path</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+Devanagari:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold:#C9A227; --soft-gold:#F5E6C8; --midnight:#06060F; }
+        :root { --gold:#C9A227; --soft-gold:#F5E6C8; --midnight:#06060F; --smoke:rgba(255,255,255,0.45); --glass-border:rgba(201,162,39,0.15); --glass-strong:rgba(10,10,26,0.88); }
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Cormorant Garamond',serif; background:var(--midnight); color:#E8E4D9; min-height:100vh; padding:40px; }
-        .container { max-width:1000px; margin:0 auto; }
-        h1 { font-family:'Cinzel Decorative',serif; font-size:1.5em; color:var(--gold); letter-spacing:0.15em; text-align:center; margin-bottom:8px; }
-        .subtitle { text-align:center; color:rgba(255,255,255,0.4); font-style:italic; margin-bottom:40px; font-size:0.95em; }
-        .layout { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
-        .panel { border:1px solid rgba(201,162,39,0.15); background:rgba(10,10,26,0.8); padding:30px; }
-        .panel h2 { font-family:'Cinzel',serif; font-size:0.65em; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
-        .field { margin-bottom:18px; }
-        .field label { display:block; font-family:'Inter',sans-serif; font-size:0.6em; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:6px; }
-        .field input, .field textarea, .field select { width:100%; padding:10px 14px; background:rgba(255,255,255,0.04); border:1px solid rgba(201,162,39,0.15); color:#E8E4D9; font-family:'Cormorant Garamond',serif; font-size:0.95em; outline:none; transition:border 0.3s; }
-        .field input:focus, .field textarea:focus { border-color:rgba(201,162,39,0.5); }
-        .field textarea { resize:vertical; min-height:80px; font-family:'Noto Serif Devanagari',serif; }
-        .btn-row { display:flex; gap:10px; margin-top:20px; }
-        button { padding:10px 24px; border:1px solid var(--gold); background:transparent; color:var(--gold); font-family:'Inter',sans-serif; font-size:0.65em; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; }
+        .container { max-width:1100px; margin:0 auto; }
+        h1 { font-family:'Cinzel Decorative',serif; font-size:1.4em; color:var(--gold); letter-spacing:0.15em; text-align:center; margin-bottom:6px; }
+        .subtitle { text-align:center; color:var(--smoke); font-style:italic; margin-bottom:36px; font-size:0.95em; }
+
+        .layout { display:grid; grid-template-columns:1fr 1.1fr; gap:36px; align-items:start; }
+        .panel { border:1px solid var(--glass-border); background:var(--glass-strong); padding:28px; }
+        .panel h2 { font-family:'Cinzel',serif; font-size:0.6em; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:18px; }
+        .field { margin-bottom:14px; }
+        .field label { display:block; font-family:'Inter',sans-serif; font-size:0.58em; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.38); margin-bottom:5px; }
+        .field input, .field textarea, .field select {
+            width:100%; padding:10px 14px;
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(201,162,39,0.12);
+            color:#E8E4D9; font-family:'Cormorant Garamond',serif; font-size:0.95em;
+            outline:none; transition:border 0.3s; resize:vertical;
+        }
+        .field textarea { min-height:70px; font-family:'Noto Serif Devanagari',serif; }
+        .field input:focus, .field textarea:focus { border-color:rgba(201,162,39,0.4); }
+        .btn-row { display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+        button { padding:10px 22px; border:1px solid var(--gold); background:transparent; color:var(--gold); font-family:'Inter',sans-serif; font-size:0.6em; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; }
         button:hover { background:var(--gold); color:var(--midnight); }
         button.primary { background:var(--gold); color:var(--midnight); }
         button.primary:hover { background:#E8C84A; }
-        .preview-label { font-family:'Inter',sans-serif; font-size:0.6em; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:10px; display:block; }
-        #previewArea { display:flex; justify-content:center; align-items:center; min-height:400px; }
-        canvas { max-width:100%; border-radius:4px; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
-        .output-links { margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; }
-        .output-links a { font-family:'Inter',sans-serif; font-size:0.6em; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); text-decoration:none; border:1px solid rgba(201,162,39,0.3); padding:8px 16px; transition:all 0.3s; }
-        .output-links a:hover { background:rgba(201,162,39,0.1); border-color:var(--gold); }
-        .tip { font-family:'Inter',sans-serif; font-size:0.6em; color:rgba(255,255,255,0.3); margin-top:8px; font-style:italic; }
-        @media(max-width:768px) { .layout { grid-template-columns:1fr; } }
+        button.secondary { border-color:rgba(201,162,39,0.25); color:rgba(255,255,255,0.4); }
+        button.secondary:hover { border-color:var(--gold); color:var(--gold); background:rgba(201,162,39,0.05); }
+
+        .preview-label { font-family:'Inter',sans-serif; font-size:0.58em; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:10px; display:block; }
+        #previewArea { display:flex; justify-content:center; align-items:center; min-height:420px; }
+        canvas { max-width:100%; border-radius:3px; box-shadow:0 16px 48px rgba(0,0,0,0.5); }
+        .output-row { margin-top:16px; display:flex; gap:10px; }
+        .output-row a { font-family:'Inter',sans-serif; font-size:0.58em; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); text-decoration:none; border:1px solid rgba(201,162,39,0.25); padding:8px 16px; transition:all 0.3s; }
+        .output-row a:hover { background:rgba(201,162,39,0.08); border-color:var(--gold); }
+
+        .quick-verses { margin-top:14px; }
+        .quick-verses-label { font-family:'Inter',sans-serif; font-size:0.55em; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:8px; }
+        .quick-btns { display:flex; flex-wrap:wrap; gap:6px; }
+        .quick-btns button { padding:5px 10px; font-size:0.55em; border-color:rgba(201,162,39,0.15); }
+
+        .status { font-family:'Inter',sans-serif; font-size:0.58em; color:rgba(255,255,255,0.3); margin-top:10px; font-style:italic; }
+
+        @media(max-width:900px) { .layout { grid-template-columns:1fr; } }
+        @media(max-width:640px) { body { padding:20px; } h1 { font-size:1.1em; } }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>✦ VERSE CARD GENERATOR ✦</h1>
-        <p class="subtitle">Create beautiful Pinterest & Instagram quote cards from Bhagavad Gita verses</p>
+        <h1>VERSE CARD GENERATOR</h1>
+        <p class="subtitle">Create beautiful spiritual quote cards for Pinterest and Instagram</p>
 
         <div class="layout">
-            <!-- LEFT: CONTROLS -->
+            <!-- LEFT: FORM -->
             <div class="panel">
-                <h2>Verse Details</h2>
+                <h2>Card Details</h2>
 
                 <div class="field">
-                    <label>Sanskrit Verse</label>
-                    <textarea id="sanskrit" placeholder="कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥</textarea>
-                </div>
+                                    <label>Card Details</label>
+                                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;align-items:end;">
+                                        <div style="display:flex;flex-direction:column;gap:4px;">
+                                            <span style="font-family:'Inter',sans-serif;font-size:0.52em;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);">Chapter</span>
+                                            <input type="number" id="customChapter" min="1" max="18" value="2" placeholder="1-18" style="padding:8px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(201,162,39,0.12);color:#E8E4D9;font-family:'Cormorant Garamond',serif;font-size:0.95em;outline:none;width:100%;">
+                                        </div>
+                                        <div style="display:flex;flex-direction:column;gap:4px;">
+                                            <span style="font-family:'Inter',sans-serif;font-size:0.52em;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);">Verse</span>
+                                            <input type="number" id="customVerse" min="1" max="85" value="47" placeholder="1-85" style="padding:8px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(201,162,39,0.12);color:#E8E4D9;font-family:'Cormorant Garamond',serif;font-size:0.95em;outline:none;width:100%;">
+                                        </div>
+                                        <button onclick="loadCustomVerse()" style="padding:8px 0;border:1px solid var(--gold);background:transparent;color:var(--gold);font-family:'Inter',sans-serif;font-size:0.55em;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;white-space:nowrap;">Load</button>
+                                    </div>
+                                </div>
 
-                <div class="field">
-                    <label>Transliteration (optional)</label>
-                    <input type="text" id="translit" placeholder="Karmany evadhikaras te ma phaleshu kadachana...">
-                </div>
+                                <div class="field">
+                                    <label>Sanskrit Verse</label>
+                                    <textarea id="sanskrit" placeholder="Enter the Sanskrit verse in Devanagari script, or use the fields above to auto-fill..."></textarea>
+                                </div>
 
-                <div class="field">
-                    <label>English Translation</label>
-                    <textarea id="english">You have the right to perform your prescribed duties, but you are not entitled to the fruits of your actions.</textarea>
-                </div>
+                                <div class="field">
+                                    <label>English Translation</label>
+                                    <textarea id="english" placeholder="Enter the English translation of the verse..."></textarea>
+                                </div>
 
-                <div class="field">
-                    <label>Verse Reference</label>
-                    <input type="text" id="ref" value="— Bhagavad Gita 2.47">
-                </div>
+                                <div class="field">
+                                    <label>Verse Reference</label>
+                                    <input type="text" id="ref" placeholder="-- Bhagavad Gita 2.47">
+                                </div>
 
-                <div class="field">
-                    <label>Card Theme</label>
-                    <select id="theme">
-                        <option value="krishna">Krishna Gold (default)</option>
-                        <option value="ocean">Ocean Deep Blue</option>
-                        <option value="forest">Forest Emerald</option>
-                        <option value="sunset">Sunset Amber</option>
-                        <option value="violet">Violet Mystic</option>
-                    </select>
-                </div>
+                                <div class="field">
+                                    <label>Card Theme</label>
+                                    <select id="theme">
+                                        <option value="krishna">Krishna Gold (dark)</option>
+                                        <option value="ocean">Ocean Deep (blue)</option>
+                                        <option value="forest">Forest (green)</option>
+                                        <option value="sunset">Sunset (amber)</option>
+                                        <option value="violet">Violet Mystic</option>
+                                    </select>
+                                </div>
 
-                <div class="field">
-                    <label>Card Size</label>
-                    <select id="size">
-                        <option value="1080x1350">Pinterest Pin (1080×1350)</option>
-                        <option value="1080x1080">Square Instagram (1080×1080)</option>
-                        <option value="1080x1920">Story/Reel (1080×1920)</option>
-                    </select>
-                </div>
+                                <div class="field">
+                                    <label>Card Size</label>
+                                    <select id="size">
+                                        <option value="1080x1350">Pinterest Pin (1080 x 1350)</option>
+                                        <option value="1080x1080">Square Post (1080 x 1080)</option>
+                                        <option value="1080x1920">Story / Reel (1080 x 1920)</option>
+                                    </select>
+                                </div>
 
                 <div class="btn-row">
                     <button class="primary" onclick="generateCard()">Generate Card</button>
-                    <button onclick="downloadCard()">Download PNG</button>
+                    <button class="secondary" onclick="downloadCard()">Download PNG</button>
+                    <button class="secondary" onclick="copyCardImage()">Copy Image</button>
                 </div>
-                <p class="tip">Tip: Pinterest pins at 1080×1350 get the highest engagement</p>
+
+                <div class="quick-verses">
+                    <div class="quick-verses-label">Popular verses to try:</div>
+                    <div class="quick-btns">
+                        <button onclick="loadVerse('2.47')">2.47</button>
+                        <button onclick="loadVerse('2.20')">2.20</button>
+                        <button onclick="loadVerse('2.48')">2.48</button>
+                        <button onclick="loadVerse('4.7')">4.7</button>
+                        <button onclick="loadVerse('6.5')">6.5</button>
+                        <button onclick="loadVerse('9.34')">9.34</button>
+                        <button onclick="loadVerse('18.66')">18.66</button>
+                    </div>
+                </div>
             </div>
 
             <!-- RIGHT: PREVIEW -->
             <div>
                 <span class="preview-label">Live Preview</span>
                 <div id="previewArea"><canvas id="cardCanvas" width="540" height="675"></canvas></div>
-                <div class="output-links" id="outputLinks" style="display:none;">
-                    <a href="#" id="downloadLink" download="gita-verse-card.png">⬇ Download PNG</a>
-                    <a href="#" id="copyLink" onclick="copyToClipboard()">📋 Copy to Clipboard</a>
+                <div class="output-row" id="outputRow" style="display:none;">
+                    <a href="#" id="downloadLink" download="verse-card.png">Download PNG</a>
+                    <a href="#" id="copyLink" onclick="return false;">Copy Image</a>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="gita-data.js"></script>
     <script>
+    const VERSES_DB = {};
+    // Build quick lookup
+    if (typeof GITA !== 'undefined' && GITA.chapters) {
+        GITA.chapters.forEach(ch => {
+            ch.verses.forEach(v => {
+                VERSES_DB[v.num] = v;
+            });
+        });
+    }
+
+    function loadCustomVerse() {
+            const ch = parseInt(document.getElementById('customChapter').value) || 1;
+            const v = parseInt(document.getElementById('customVerse').value) || 1;
+            const num = ch + '.' + v;
+            if (VERSES_DB[num]) {
+                document.getElementById('sanskrit').value = VERSES_DB[num].sanskrit;
+                document.getElementById('english').value = VERSES_DB[num].translation;
+                document.getElementById('ref').value = '-- Bhagavad Gita ' + VERSES_DB[num].num;
+                generateCard();
+            } else if (typeof GITA !== 'undefined' && GITA.chapters && GITA.chapters[ch-1]) {
+                const matched = GITA.chapters[ch-1].verses.find(vv => vv.num === num);
+                if (matched) {
+                    document.getElementById('sanskrit').value = matched.sanskrit;
+                    document.getElementById('english').value = matched.translation;
+                    document.getElementById('ref').value = '-- Bhagavad Gita ' + matched.num;
+                    generateCard();
+                }
+            }
+        }
+
+        function loadVerse(num) {
+            const v = VERSES_DB[num];
+            if (v) {
+                document.getElementById('sanskrit').value = v.sanskrit;
+                document.getElementById('english').value = v.translation;
+                document.getElementById('ref').value = '-- Bhagavad Gita ' + v.num;
+                generateCard();
+            }
+        }
+
     const THEMES = {
-        krishna: { bg1:'#0A0614', bg2:'#1A0F2E', gold:'#C9A227', soft:'#F5E6C8', text:'#E8E4D9', accent:'#8B6914', cardBg:'rgba(20,10,40,0.85)' },
-        ocean:   { bg1:'#030E1A', bg2:'#0A2342', gold:'#4A9EC4', soft:'#B8D4E8', text:'#C8DFF0', accent:'#1A5276', cardBg:'rgba(10,35,66,0.85)' },
-        forest:  { bg1:'#030A05', bg2:'#0D2618', gold:'#4CAF50', soft:'#A8D5B8', text:'#C8E6C8', accent:'#1B5E20', cardBg:'rgba(13,38,24,0.85)' },
-        sunset:  { bg1:'#1A0905', bg2:'#2D1810', gold:'#E87C3E', soft:'#F5C8A8', text:'#F0D8C8', accent:'#A04000', cardBg:'rgba(45,24,16,0.85)' },
-        violet:  { bg1:'#0F051A', bg2:'#1A0A2E', gold:'#9B59B6', soft:'#D8B8E8', text:'#E0D0F0', accent:'#5B2C6F', cardBg:'rgba(26,10,46,0.85)' }
+        krishna: { bg1:'#08060F', bg2:'#120A1E', gold:'#C9A227', soft:'#F5E6C8', text:'#D8D4CC', accent:'#8B6914', cardBg:'rgba(15,8,30,0.9)' },
+        ocean:   { bg1:'#030C18', bg2:'#081F38', gold:'#4A9EC4', soft:'#B0D0E8', text:'#C0D8EC', accent:'#1A5276', cardBg:'rgba(8,31,56,0.9)' },
+        forest:  { bg1:'#050E07', bg2:'#0C2515', gold:'#5CAD4A', soft:'#A8D8B0', text:'#C4DEC4', accent:'#1B5E20', cardBg:'rgba(12,37,21,0.9)' },
+        sunset:  { bg1:'#180804', bg2:'#2C1508', gold:'#D07030', soft:'#F0C0A0', text:'#E8D0BC', accent:'#8B3A00', cardBg:'rgba(44,21,8,0.9)' },
+        violet:  { bg1:'#0C0518', bg2:'#18092A', gold:'#9B6BBE', soft:'#D0B0E8', text:'#DCD0F0', accent:'#4A2070', cardBg:'rgba(24,9,42,0.9)' }
     };
 
     function generateCard() {
@@ -125,83 +207,84 @@
         const sanskrit = document.getElementById('sanskrit').value.trim();
         const english = document.getElementById('english').value.trim();
         const ref = document.getElementById('ref').value.trim();
-        const translit = document.getElementById('translit').value.trim();
 
-        // Background gradient
+        if (!sanskrit && !english) return;
+
+        // Background
         const grad = ctx.createLinearGradient(0, 0, w, h);
         grad.addColorStop(0, t.bg1);
         grad.addColorStop(1, t.bg2);
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
 
-        // Decorative corner accents
-        ctx.strokeStyle = t.gold + '40';
+        // Corner marks
+        ctx.strokeStyle = t.gold + '30';
         ctx.lineWidth = 1;
-        // Top left
-        ctx.beginPath(); ctx.moveTo(20,60); ctx.lineTo(20,20); ctx.lineTo(60,20); ctx.stroke();
-        // Bottom right
-        ctx.beginPath(); ctx.moveTo(w-20, h-60); ctx.lineTo(w-20, h-20); ctx.lineTo(w-60, h-20); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(24, 70); ctx.lineTo(24, 24); ctx.lineTo(70, 24); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(w-24, h-70); ctx.lineTo(w-24, h-24); ctx.lineTo(w-70, h-24); ctx.stroke();
 
-        // Top decorative line
-        const lineGrad = ctx.createLinearGradient(w*0.2, 0, w*0.8, 0);
-        lineGrad.addColorStop(0, 'transparent');
-        lineGrad.addColorStop(0.5, t.gold + '60');
-        lineGrad.addColorStop(1, 'transparent');
-        ctx.strokeStyle = lineGrad;
-        ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(w*0.15, 60); ctx.lineTo(w*0.85, 60); ctx.stroke();
+        // Top accent line
+        const lg = ctx.createLinearGradient(w*0.2, 0, w*0.8, 0);
+        lg.addColorStop(0, 'transparent');
+        lg.addColorStop(0.5, t.gold + '50');
+        lg.addColorStop(1, 'transparent');
+        ctx.strokeStyle = lg;
+        ctx.lineWidth = 0.8;
+        ctx.beginPath(); ctx.moveTo(w*0.15, 65); ctx.lineTo(w*0.85, 65); ctx.stroke();
 
-        // Om symbol
-        ctx.fillStyle = t.gold + '25';
-        ctx.font = `bold ${Math.round(w*0.5)}px 'Noto Serif Devanagari', serif`;
+        // Om watermark
+        ctx.fillStyle = t.gold + '18';
+        ctx.font = `bold ${Math.round(w*0.52)}px 'Noto Serif Devanagari', serif`;
         ctx.textAlign = 'center';
-        ctx.fillText('ॐ', w/2, h*0.28);
+        ctx.fillText('\u093C\u0965', w/2, h*0.26);
 
-        // Sanskrit
+        // Sanskrit verse
+        const fs = Math.round(w * 0.052);
+        ctx.font = `500 ${fs}px 'Noto Serif Devanagari', serif`;
         ctx.fillStyle = t.soft;
-        ctx.font = `500 ${Math.round(w*0.055)}px 'Noto Serif Devanagari', serif`;
         ctx.textAlign = 'center';
-        const lines = wrapText(ctx, sanskrit, w*0.82);
-        let y = h*0.32;
-        lines.forEach(l => { ctx.fillText(l, w/2, y); y += ctx.measureText(l).actualBoundingBoxDescent + w*0.055; });
+        const sLines = wrapText(ctx, sanskrit, w * 0.80);
+        let y = h * 0.30;
+        sLines.forEach(l => { ctx.fillText(l, w/2, y); y += fs + fs * 0.35; });
 
         // Divider
-        const dvY = Math.min(y + h*0.03, h*0.57);
-        ctx.strokeStyle = t.gold + '50';
-        ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(w*0.3, dvY); ctx.lineTo(w*0.7, dvY); ctx.stroke();
-        // Diamond
+        const dvY = Math.min(y + h * 0.02, h * 0.56);
+        ctx.strokeStyle = t.gold + '45';
+        ctx.lineWidth = 0.8;
+        ctx.beginPath(); ctx.moveTo(w*0.28, dvY); ctx.lineTo(w*0.72, dvY); ctx.stroke();
         ctx.fillStyle = t.gold;
-        ctx.beginPath(); ctx.arc(w/2, dvY, 4, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(w/2, dvY, 3.5, 0, Math.PI*2); ctx.fill();
 
         // English
+        const fe = Math.round(w * 0.040);
+        ctx.font = `400 ${fe}px 'Cormorant Garamond', serif`;
         ctx.fillStyle = t.text;
-        ctx.font = `400 ${Math.round(w*0.042)}px 'Cormorant Garamond', serif`;
-        const engLines = wrapText(ctx, english, w*0.82);
-        y = dvY + h*0.05;
-        engLines.forEach(l => { ctx.fillText(l, w/2, y); y += w*0.055; });
+        const eLines = wrapText(ctx, english, w * 0.80);
+        y = dvY + fe + fe * 0.6;
+        eLines.forEach(l => { ctx.fillText(l, w/2, y); y += fe + fe * 0.5; });
 
         // Reference
         ctx.fillStyle = t.gold;
-        ctx.font = `600 ${Math.round(w*0.035)}px 'Cinzel', serif`;
-        ctx.fillText(ref, w/2, h*0.88);
+        ctx.font = `600 ${Math.round(w*0.032)}px 'Cinzel', serif`;
+        ctx.fillText(ref, w/2, h * 0.87);
 
-        // Bottom line
-        ctx.strokeStyle = t.gold + '40';
-        ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(w*0.15, h-60); ctx.lineTo(w*0.85, h-60); ctx.stroke();
+        // Bottom accent line
+        ctx.strokeStyle = t.gold + '35';
+        ctx.lineWidth = 0.8;
+        ctx.beginPath(); ctx.moveTo(w*0.15, h-65); ctx.lineTo(w*0.85, h-65); ctx.stroke();
 
-        // Logo watermark
-        ctx.fillStyle = t.gold + '30';
-        ctx.font = `600 ${Math.round(w*0.028)}px 'Cinzel', serif`;
-        ctx.fillText('THE 1 PATH', w/2, h - 30);
+        // Watermark
+        ctx.fillStyle = t.gold + '25';
+        ctx.font = `600 ${Math.round(w*0.026)}px 'Cinzel', serif`;
+        ctx.fillText('THE HINDU PATH', w/2, h - 28);
 
-        // Update download link
-        document.getElementById('outputLinks').style.display = 'flex';
+        // Show outputs
+        document.getElementById('outputRow').style.display = 'flex';
         document.getElementById('downloadLink').href = canvas.toDataURL('image/png');
     }
 
     function wrapText(ctx, text, maxWidth) {
+        if (!text) return [];
         const words = text.split(' ');
         const lines = [];
         let current = '';
@@ -217,19 +300,27 @@
 
     function downloadCard() {
         const link = document.getElementById('downloadLink');
-        link.click();
+        if (link.href) link.click();
     }
 
-    function copyToClipboard() {
+    function copyCardImage() {
         const canvas = document.getElementById('cardCanvas');
         canvas.toBlob(blob => {
-            navigator.clipboard.write([
-                new ClipboardItem({ 'image/png': blob })
-            ]).then(() => alert('Card copied to clipboard!')).catch(() => alert('Copy not supported — use Download instead.'));
+            if (navigator.clipboard && navigator.clipboard.write) {
+                navigator.clipboard.write([
+                    new ClipboardItem({ 'image/png': blob })
+                ]).then(() => {
+                    const el = document.getElementById('copyLink');
+                    el.textContent = 'Copied';
+                    setTimeout(() => { el.textContent = 'Copy Image'; }, 2000);
+                }).catch(() => { alert('Copy not supported in this browser — use Download instead.'); });
+            } else {
+                alert('Copy not supported in this browser — use Download instead.');
+            }
         });
     }
 
-    // Generate initial card on load
+    // Generate blank canvas on load
     generateCard();
     </script>
 </body>
