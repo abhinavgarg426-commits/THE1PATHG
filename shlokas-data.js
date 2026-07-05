@@ -48,15 +48,15 @@ const SHLOKAS = {
             name: "Kavacham — Morning Shield",
             type: "Cosmic Armor Chant",
             sanskrit: "काराग्रेण बलं मेऽस्तु प्रज्ञया च धनं मम। आरोग्येण त्रिभिर्भूत्वा सुखं जीवेयमनामयः॥",
-            translit: "Kaaragre vashe shakti, prajnyaaya cha dhanam mama. Aarogye tribhir bhootva, sukham jeevema naamayah.",
-            translation: "Let my power be in my speech, my wealth in my wisdom, my health in the three — and may I live happily without disease.",
+            "translit": "KaaragreNa bale me astu prajnyaaya cha dhanam mama. AarogyeNa tribhir bhootva, sukham jeevema anaamayah.",
+                        "translation": "May strength be at the tip of my hands, and wisdom in my intellect. Having obtained these three — health, strength, and insight — may I live happily free from all illness.",
             benefit: "Chanted upon waking. Invokes divine protection throughout the day."
         },
         {
             name: "Meditation on the Self",
             type: "Pranava Ashram Chant",
             sanskrit: "अयं निजः परो वित्त इत्यवयं निश्चित्य बुधः। निकामयति न यावदायुः कर्म परमाप्नोति धर्मम्॥",
-            translit: "Ayam niijah paro vitta iti niyamya buddhah. Nikamayati na yavad ayuh karma samarpayati dharmam.",
+            translit: "Ayam nijah paro vitta iti niyamya buddhah. Nikamayati na yavad ayuh karma samarpayati dharmam.",
             translation: "This self is one's own, all else is temporary — this the wise realize. They do not hoard wealth. Until the end of life, they perform their sacred duty.",
             benefit: "Chanted during meditation. Cultivates detachment and selfless action."
         },
@@ -118,20 +118,20 @@ const SHLOKAS = {
         {
             name: "Offering of Food",
             sanskrit: "ब्रह्मार्पणं ब्रह्म हविर्ब्रह्माग्नौ ब्रह्मणा हुतम्। ब्रह्मैव तेन गन्तव्यं ब्रह्मकर्मसमाधिना॥",
-            translit: "Brahmarpanam brahma havir-brahmaagnau brahmana hutam. Brahmeva tena gantavyam brahma-karma-samadhinA.",
+            translit: "Brahmarpanam brahma havir-brahmaagnau brahmana hutam. Brahmeva tena gantavyam brahma-karma-samadhipa.",
             translation: "The offering is Brahman, the oblation is Brahman, offered by Brahman into the fire of Brahman. Brahman alone is to be reached by one absorbed in Brahman-action."
         },
         {
             name: "Evening Prayer — Surrender",
             sanskrit: "विश्वं दैवं हृदि यत्पुरस्ताद्वा तस्मै देवाय नमः। यो जगामरिरम्भस्थः सर्वभूतनिवासिने॥",
-            translit: "Vishvam daivam hridi yat purastad va tasmai devaya namah. Yo jagma arim-bha-sthah sarva-bhuta-nivasinE.",
+            translit: "Vishvam daivam hridi yat purastad va tasmai devaya namah. Yo jagma arim-bha-sthah sarva-bhuta-nivasine.",
             translation: "To the divine of the universe residing in the heart — to that god, we bow. To the one who pervades all beings, who is the refuge of all — we surrender."
         },
         {
             name: "Prayer for Right Action",
             sanskrit: "कायेन वाचा मनसेन्द्रियैर्वा बुद्ध्यात्मना वा प्रकृतिसंभवैः। करोति यद्यदालेपकं लोकस्तदनुवर्तते॥",
             translit: "Kayena vacha manasendriyai va buddhy atmana va prakriti-sambhavaih. Karoti yad yad alepakam lokas tad anuvartate.",
-            translation: "Whatever a person does with body, speech, mind, senses, or intellect — whether pure or impure — all returns to them. As you sow, so shall you reap."
+            "translation": "All actions of body, speech, mind, senses, and intellect — when offered with the intellect to the Supreme — become divine offering. Whatever one does with attachment, the fruit returns to them alone."
         },
         {
             name: "Bhakti Stotram — Devotion's Praise",
@@ -141,8 +141,8 @@ const SHLOKAS = {
         },
         {
             name: "Santosh Shloka — Contentment",
-            sanskrit: "सन्तोषामृतTथा इष्टा धनं सर्वार्थतः समृद्धिम्। कल्पान्तरेऽभयं सौख्यं मयि तिष्ठति नित्यशः॥",
-            translit: "Santoshamrit tatha ishta dhanam sarvarthatah sammritim. Kalp-antare 'bhayam saukhyam mayi tishthati nityashah.",
+            sanskrit: "सन्तोषामृतं तथा इष्टा धनं सर्वार्थतः समृद्धिम्। कल्पान्तरेऽभयं सौख्यं मयि तिष्ठति नित्यशः॥",
+            translit: "Santoshamrit tatha ishta dhanam sarvarthatah samrittim. Kalp-antare shune 'bhayam saukhyam mayi tishthati nityashah.",
             translation: "Contentment is the supreme nectar, desired by all. In the golden age, it bestows fearlessness and eternal bliss that dwells in me forever."
         },
         {

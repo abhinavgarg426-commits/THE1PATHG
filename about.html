@@ -92,7 +92,7 @@
             <a href="about.html" class="active">About</a>
         </div>
         <div class="nav-right">
-            <button class="nav-btn" id="themeBtn" title="Toggle Theme">&#9788;</button>
+            <button class="nav-btn" id="themeBtn" title="Toggle Theme"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
         </div>
     </nav>
 
@@ -119,9 +119,9 @@
         </div>
 
         <div class="about-block quote reveal">
-            <p>"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि।"<br><br>
-            "You have the right to perform your prescribed duties, but you are not entitled to the fruits of your actions."</p>
-        </div>
+                    <p>"न च तद्विदुः सुरगणा न किंचित्साम्परायगा:।<br>कर्म ह्यसाम्परायोsयं निर्वैरं कर्म चाकुर्वत:।।"<br><br>
+                    "Not even the hosts of gods know the origin of this path — for no one in the world can be without action. Yet those who perform action without attachment, renouncing the fruit, find peace and liberation."</p>
+                </div>
 
         <div class="about-block reveal">
             <h2>What's Inside</h2>
@@ -147,17 +147,17 @@
     <div class="features-section">
         <div class="features-grid">
             <div class="feature-card reveal">
-                <div class="feature-icon">&#9675;</div>
+                <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div>
                 <h3>Multilingual</h3>
                 <p>Every verse presented in Sanskrit Devanagari, English translation, and Hindi — side by side for deep study.</p>
             </div>
             <div class="feature-card reveal">
-                <div class="feature-icon">&#9679;</div>
+                <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
                 <h3>Instant Search</h3>
                 <p>Search any verse, keyword, or concept across the entire Bhagavad Gita. Find what you need in seconds.</p>
             </div>
             <div class="feature-card reveal">
-                <div class="feature-icon">&#9675;</div>
+                <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div>
                 <h3>Beautiful Design</h3>
                 <p>Glassmorphism aesthetic, ambient particles, and smooth animations — designed to elevate your reading experience.</p>
             </div>
@@ -246,6 +246,32 @@
         localStorage.setItem('theme', document.body.classList.contains('light')?'light':'dark');
     });
     if(localStorage.getItem('theme')==='light'){ document.body.classList.add('light'); themeBtn.textContent='&#9790;'; }
+    </script>
+
+    <div id="bgMusicPlayer" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;align-items:center;gap:8px;background:rgba(8,6,18,0.92);backdrop-filter:blur(16px);border:1px solid rgba(201,162,39,0.18);border-radius:40px;padding:8px 14px;box-shadow:0 8px 32px rgba(0,0,0,0.4);">
+        <button onclick="toggleBgMusic()" id="musicToggle" style="background:transparent;border:none;cursor:pointer;color:var(--gold, #C9A227);font-size:0.8em;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,162,39,0.3);display:flex;align-items:center;justify-content:center;transition:all 0.3s;" title="Toggle Music">&#9654;</button>
+        <input type="range" id="musicVol" min="0" max="1" step="0.05" value="0.4" oninput="setBgVolume(this.value)" style="width:60px;accent-color:#C9A227;cursor:pointer;">
+        <span id="musicNote" style="font-family:Inter,sans-serif;font-size:0.5em;letter-spacing:0.1em;color:rgba(255,255,255,0.3);">ambient</span>
+    </div>
+    <audio id="bgAudio" loop preload="none">
+        <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+    var bgAudio = document.getElementById('bgAudio');
+    var musicTgl = document.getElementById('musicToggle');
+    var musicVol = document.getElementById('musicVol');
+    var vol = parseFloat(localStorage.getItem('hindupath_volume') || '0.4');
+    bgAudio.volume = vol;
+    musicVol.value = vol;
+    var playing = localStorage.getItem('hindupath_playing') === '1';
+    function toggleBgMusic() {
+        if (!bgAudio.src) bgAudio.src = 'https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3';
+        if (playing) { bgAudio.pause(); playing=false; musicTgl.innerHTML='&#9654;'; }
+        else { bgAudio.play().catch(function(){}); playing=true; musicTgl.innerHTML='&#9646;&#9646;'; }
+        localStorage.setItem('hindupath_playing', playing?'1':'0');
+    }
+    function setBgVolume(v) { bgAudio.volume=parseFloat(v); localStorage.setItem('hindupath_volume',v); }
+    if (playing) { bgAudio.src = 'https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3'; bgAudio.play().catch(function(){}); musicTgl.innerHTML='&#9646;&#9646;'; }
     </script>
 </body>
 </html>

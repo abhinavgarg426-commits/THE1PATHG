@@ -120,7 +120,7 @@
     <script>
     // BG MUSIC (matches all pages)
     (function(){
-        const tracks=['https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3'];
+        const tracks=['https://www.https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3','https://www.https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3','https://www.https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3'];
         const audio=document.getElementById('bgAudio');
         let trackIdx=+localStorage.getItem('musicTrack')||0, isPlaying=localStorage.getItem('musicPlaying')==='1';
         function loadTrack(idx){audio.src=tracks[idx];audio.volume=(localStorage.getItem('musicVol')||30)/100;}
@@ -138,6 +138,32 @@
     const themeBtn=document.getElementById('themeBtn');themeBtn.addEventListener('click',()=>{document.body.classList.toggle('light');themeBtn.textContent=document.body.classList.contains('light')?'&#9790;':'&#9788;';localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');});if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');themeBtn.textContent='&#9790;';}
     function copyVerse(v){navigator.clipboard.writeText(`${v.sanskrit}\n\n"${v.translation}"`).then(()=>{const t=document.createElement('div');t.textContent='Copied! ';t.style.cssText='position:fixed;bottom:30px;right:30px;background:rgba(10,10,26,0.95);border:1px solid #C9A227;color:#F5E6C8;padding:12px 24px;font-family:Inter,sans-serif;font-size:0.7em;z-index:9999;border-radius:4px';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);});}
     function renderUpanishads(){const grid=document.getElementById('upGrid');grid.innerHTML=UPANISHADS.map((u,i)=>`<div class="up-card${i===0?' active':''}" onclick="showUp(${i})"><div class="up-num">${u.name}</div><div class="up-name">${u.sanskrit_name}</div><div class="up-subtitle">${u.subtitle}</div></div>`).join('');const det=document.getElementById('upDetails');det.innerHTML=UPANISHADS.map((u,i)=>`<div class="up-detail${i===0?' active':''}" id="upd-${i}"><div class="up-header"><h2>${u.name} — ${u.sanskrit_name}</h2><p>${u.subtitle} · ${u.verses.length} verses</p></div>${u.verses.map(v=>`<div class="verse-card reveal"><div class="verse-top"><div class="verse-num">${v.ref}</div><div class="verse-actions"><button class="verse-action-btn" onclick="copyVerse(${JSON.stringify(v).replace(/'/g,"\\'")})" title="Copy">&#9744;</button></div></div><div class="verse-sanskrit">${v.sanskrit}</div><div class="verse-translit">${v.translit}</div><div class="verse-divider"></div><div class="verse-eng">${v.translation}</div>${v.hindi?`<div class="verse-hindi">${v.hindi}</div>`:''}<div class="verse-ref">${v.ref}</div></div>`).join('')}</div>`).join('');initReveal();}function showUp(idx){document.querySelectorAll('.up-card').forEach((c,i)=>c.classList.toggle('active',i===idx));document.querySelectorAll('.up-detail').forEach(d=>d.classList.remove('active'));const el=document.getElementById('upd-'+idx);el.classList.add('active');el.scrollIntoView({behavior:'smooth',block:'start'});}renderUpanishads();
+    </script>
+
+    <div id="bgMusicPlayer" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;align-items:center;gap:8px;background:rgba(8,6,18,0.92);backdrop-filter:blur(16px);border:1px solid rgba(201,162,39,0.18);border-radius:40px;padding:8px 14px;box-shadow:0 8px 32px rgba(0,0,0,0.4);">
+        <button onclick="toggleBgMusic()" id="musicToggle" style="background:transparent;border:none;cursor:pointer;color:var(--gold, #C9A227);font-size:0.8em;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,162,39,0.3);display:flex;align-items:center;justify-content:center;transition:all 0.3s;" title="Toggle Music">&#9654;</button>
+        <input type="range" id="musicVol" min="0" max="1" step="0.05" value="0.4" oninput="setBgVolume(this.value)" style="width:60px;accent-color:#C9A227;cursor:pointer;">
+        <span id="musicNote" style="font-family:Inter,sans-serif;font-size:0.5em;letter-spacing:0.1em;color:rgba(255,255,255,0.3);">ambient</span>
+    </div>
+    <audio id="bgAudio" loop preload="none">
+        <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+    var bgAudio = document.getElementById('bgAudio');
+    var musicTgl = document.getElementById('musicToggle');
+    var musicVol = document.getElementById('musicVol');
+    var vol = parseFloat(localStorage.getItem('hindupath_volume') || '0.4');
+    bgAudio.volume = vol;
+    musicVol.value = vol;
+    var playing = localStorage.getItem('hindupath_playing') === '1';
+    function toggleBgMusic() {
+        if (!bgAudio.src) bgAudio.src = 'https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3';
+        if (playing) { bgAudio.pause(); playing=false; musicTgl.innerHTML='&#9654;'; }
+        else { bgAudio.play().catch(function(){}); playing=true; musicTgl.innerHTML='&#9646;&#9646;'; }
+        localStorage.setItem('hindupath_playing', playing?'1':'0');
+    }
+    function setBgVolume(v) { bgAudio.volume=parseFloat(v); localStorage.setItem('hindupath_volume',v); }
+    if (playing) { bgAudio.src = 'https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3'; bgAudio.play().catch(function(){}); musicTgl.innerHTML='&#9646;&#9646;'; }
     </script>
 </body>
 </html>

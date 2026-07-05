@@ -114,7 +114,7 @@
     <script>
     // BG MUSIC
     (function(){
-        const tracks=['https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3','https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3'];
+        const tracks=['https://www.https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3','https://www.https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3','https://www.https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3'];
         const audio=document.getElementById('bgAudio');
         let trackIdx=+localStorage.getItem('musicTrack')||0, isPlaying=localStorage.getItem('musicPlaying')==='1';
         function loadTrack(idx){audio.src=tracks[idx];audio.volume=(localStorage.getItem('musicVol')||30)/100;}
@@ -131,7 +131,7 @@
     window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
     const themeBtn=document.getElementById('themeBtn');themeBtn.addEventListener('click',()=>{document.body.classList.toggle('light');themeBtn.textContent=document.body.classList.contains('light')?'&#9790;':'&#9788;';localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');});if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');themeBtn.textContent='&#9790;';}
     function copyVerse(v){navigator.clipboard.writeText(`${v.sanskrit}\n\n"${v.translation}"`).then(()=>{const t=document.createElement('div');t.textContent='Copied! ';t.style.cssText='position:fixed;bottom:30px;right:30px;background:rgba(10,10,26,0.95);border:1px solid #C9A227;color:#F5E6C8;padding:12px 24px;font-family:Inter,sans-serif;font-size:0.7em;z-index:9999;border-radius:4px';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);});}
-    function renderCard(c){return `<div class="chant-card reveal"><div class="chant-type">${c.type||'Shloka'}</div><div class="chant-name">${c.name}</div><div class="chant-sanskrit">${c.sanskrit}</div><div class="chant-translit">${c.translit}</div><div class="chant-divider"></div><div class="chant-eng">${c.translation}</div>${c.hindi?`<div class="chant-hindi">${c.hindi}</div>`:''}${c.benefit?`<div class="chant-benefit"> ${c.benefit}</div>`:''}<div class="verse-actions"><button class="verse-action-btn" onclick="copyVerse(${JSON.stringify(c).replace(/'/g,"\\'")})" title="Copy">&#9744;</button></div></div>`;}
+    function renderCard(c){return `<div class="chant-card reveal"><div class="chant-type">${c.type||'Shloka'}</div><div class="chant-name">${c.name}</div><div class="chant-sanskrit">${c.sanskrit}</div><div class="chant-translit">${c.translit}</div><div class="chant-divider"></div><div class="chant-eng">${c.translation}</div>${c.hindi?`<div class="chant-hindi">${c.hindi}</div>`:''}${c.benefit?`<div class="chant-benefit"> ${c.benefit}</div>`:''}<div class="verse-actions"><button class="verse-action-btn" onclick="copyVerse(${JSON.stringify(c).replace(/'/g,"\\'")})" title="Copy">&#9834;</button></div></div>`;}
     function playMantra(name, btn) {
         // Try to speak the mantra name in Sanskrit if available
         if ('speechSynthesis' in window) {
@@ -151,6 +151,32 @@
         }
     }
     function renderShlokas(){document.getElementById('chantGrid').innerHTML=SHLOKAS.mahaShlokas.map(renderCard).join('');document.getElementById('prayerGrid').innerHTML=SHLOKAS.dailyPrayers.map(renderCard).join('');initReveal();}renderShlokas();
+    </script>
+
+    <div id="bgMusicPlayer" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;align-items:center;gap:8px;background:rgba(8,6,18,0.92);backdrop-filter:blur(16px);border:1px solid rgba(201,162,39,0.18);border-radius:40px;padding:8px 14px;box-shadow:0 8px 32px rgba(0,0,0,0.4);">
+        <button onclick="toggleBgMusic()" id="musicToggle" style="background:transparent;border:none;cursor:pointer;color:var(--gold, #C9A227);font-size:0.8em;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,162,39,0.3);display:flex;align-items:center;justify-content:center;transition:all 0.3s;" title="Toggle Music">&#9654;</button>
+        <input type="range" id="musicVol" min="0" max="1" step="0.05" value="0.4" oninput="setBgVolume(this.value)" style="width:60px;accent-color:#C9A227;cursor:pointer;">
+        <span id="musicNote" style="font-family:Inter,sans-serif;font-size:0.5em;letter-spacing:0.1em;color:rgba(255,255,255,0.3);">ambient</span>
+    </div>
+    <audio id="bgAudio" loop preload="none">
+        <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+    var bgAudio = document.getElementById('bgAudio');
+    var musicTgl = document.getElementById('musicToggle');
+    var musicVol = document.getElementById('musicVol');
+    var vol = parseFloat(localStorage.getItem('hindupath_volume') || '0.4');
+    bgAudio.volume = vol;
+    musicVol.value = vol;
+    var playing = localStorage.getItem('hindupath_playing') === '1';
+    function toggleBgMusic() {
+        if (!bgAudio.src) bgAudio.src = 'https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3';
+        if (playing) { bgAudio.pause(); playing=false; musicTgl.innerHTML='&#9654;'; }
+        else { bgAudio.play().catch(function(){}); playing=true; musicTgl.innerHTML='&#9646;&#9646;'; }
+        localStorage.setItem('hindupath_playing', playing?'1':'0');
+    }
+    function setBgVolume(v) { bgAudio.volume=parseFloat(v); localStorage.setItem('hindupath_volume',v); }
+    if (playing) { bgAudio.src = 'https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3'; bgAudio.play().catch(function(){}); musicTgl.innerHTML='&#9646;&#9646;'; }
     </script>
 </body>
 </html>

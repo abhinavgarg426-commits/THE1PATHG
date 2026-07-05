@@ -455,9 +455,9 @@
 
     // ===== MUSIC PLAYER — FIXED =====
     const tracks = [
-        'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-        'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-        'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3'
+        'https://www.https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3',
+        'https://www.https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3',
+        'https://www.https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3'
     ];
     const audio = document.getElementById('bgAudio');
     let isPlaying = localStorage.getItem('hindupath_playing') === '1';
@@ -530,6 +530,32 @@
     renderChapterNav();
     renderChapters();
     initReveal();
+    </script>
+
+    <div id="bgMusicPlayer" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;align-items:center;gap:8px;background:rgba(8,6,18,0.92);backdrop-filter:blur(16px);border:1px solid rgba(201,162,39,0.18);border-radius:40px;padding:8px 14px;box-shadow:0 8px 32px rgba(0,0,0,0.4);">
+        <button onclick="toggleBgMusic()" id="musicToggle" style="background:transparent;border:none;cursor:pointer;color:var(--gold, #C9A227);font-size:0.8em;width:28px;height:28px;border-radius:50%;border:1px solid rgba(201,162,39,0.3);display:flex;align-items:center;justify-content:center;transition:all 0.3s;" title="Toggle Music">&#9654;</button>
+        <input type="range" id="musicVol" min="0" max="1" step="0.05" value="0.4" oninput="setBgVolume(this.value)" style="width:60px;accent-color:#C9A227;cursor:pointer;">
+        <span id="musicNote" style="font-family:Inter,sans-serif;font-size:0.5em;letter-spacing:0.1em;color:rgba(255,255,255,0.3);">ambient</span>
+    </div>
+    <audio id="bgAudio" loop preload="none">
+        <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+    var bgAudio = document.getElementById('bgAudio');
+    var musicTgl = document.getElementById('musicToggle');
+    var musicVol = document.getElementById('musicVol');
+    var vol = parseFloat(localStorage.getItem('hindupath_volume') || '0.4');
+    bgAudio.volume = vol;
+    musicVol.value = vol;
+    var playing = localStorage.getItem('hindupath_playing') === '1';
+    function toggleBgMusic() {
+        if (!bgAudio.src) bgAudio.src = 'https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3';
+        if (playing) { bgAudio.pause(); playing=false; musicTgl.innerHTML='&#9654;'; }
+        else { bgAudio.play().catch(function(){}); playing=true; musicTgl.innerHTML='&#9646;&#9646;'; }
+        localStorage.setItem('hindupath_playing', playing?'1':'0');
+    }
+    function setBgVolume(v) { bgAudio.volume=parseFloat(v); localStorage.setItem('hindupath_volume',v); }
+    if (playing) { bgAudio.src = 'https://cdn.pixabay.com/audio/2022/10/25/audio_afcd0ab61b.mp3'; bgAudio.play().catch(function(){}); musicTgl.innerHTML='&#9646;&#9646;'; }
     </script>
 </body>
 </html>
